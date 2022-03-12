@@ -1,17 +1,18 @@
 (ns nzfe.events
   (:require
    [re-frame.core :as re-frame]
-   [re-pressed.core :as rp]
    [nzfe.db :as db]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]
-   ))
+   [day8.re-frame.tracing :refer-macros [fn-traced]]))
 
 (re-frame/reg-event-db
  ::initialize-db
+ #_:clj-kondo/ignore
  (fn-traced [_ _]
-   db/default-db))
+            db/default-db))
 
 (re-frame/reg-event-db
- ::set-re-pressed-example
- (fn [db [_ value]]
-   (assoc db :re-pressed-example value)))
+ ::set-active-time-button
+ (fn [db [_ activate-id]]
+   (when (= activate-id :tb6) (re-frame/dispatch [:toggle-show-custom-time-panel]))
+   (assoc-in db [:time-button-bar :active] activate-id)))
+

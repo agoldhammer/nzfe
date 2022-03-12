@@ -1,6 +1,6 @@
 {:nrepl {:port 8777}
 
- 
+
 
  :source-paths ["src" "test"]
 
@@ -14,7 +14,9 @@
   [re-frisk "1.5.2"]]
 
  :dev-http
- {8280 "resources/public"
+ {8280
+  {:root "resources/public"
+   :proxy-url "http://172.24.230.68:5000"}
   8290 "target/browser-test"}
 
  :builds
@@ -26,11 +28,12 @@
    {:app {:init-fn nzfe.core/init}}
    :devtools
    {:preloads [day8.re-frame-10x.preload
+               devtools.preload
                re-frisk.preload]}
    :dev
    {:compiler-options
     {:closure-defines
-     { re-frame.trace.trace-enabled? true
+     {re-frame.trace.trace-enabled? true
       day8.re-frame.tracing.trace-enabled? true}}}
    :release
    {:build-options
