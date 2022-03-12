@@ -1,0 +1,4 @@
+(ns nzfe.db)
+
+(def default-db
+  {:name "re-frame"})

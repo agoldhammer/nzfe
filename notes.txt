@@ -1,0 +1,3 @@
+Created with:
+    lein new re-frame nzfe +test +10x +re-frisk +re-pressed
+    
