@@ -16,28 +16,34 @@
 
 
 (defn time-buttons []
-  (let [button-ids @(re-frame/subscribe [::subs/get-time-button-ids])]
+  (let [button-ids (re-frame/subscribe [::subs/get-time-button-ids])]
     (into [:div.navbar.has-background-grey-lighter
            {:on-click #(re-frame/dispatch [::events/set-active-time-button
                                            (keyword
                                             (-> % .-target .-id))])}]
-          (mapv time-button button-ids))))
+          (mapv time-button @button-ids))))
 
 (defn time-dropdown
   []
-  (let [button-ids @(re-frame/subscribe [::subs/get-time-button-ids])]
-    (into [:div.nabar.has-background-grey-lighter
-           [:div.dropdown.is-hoverable
-            [:div.dropdown-trigger
-             [:button.button
-              [:span "Time select"]
-              [:span.icon.is-small
-               [:i.fas.fa-angle-down]]]]
-            [:div#dropdown-menu.dropdown-menu
-             [:div.dropdown-content
-              [:a.dropdown-item.is-active "item1"]
-              [:a.dropdown-item "item2"]]
-             #_(mapv time-button button-ids)]]])))
+  (let [#_#_button-ids @(re-frame/subscribe [::subs/get-time-button-ids])
+        active? (re-frame/subscribe [::subs/time-dd-active?])]
+
+    (fn []
+      (into [:div#time-dd.dropdown
+             {:class (when @active? "is_active")
+              :on-click #(re-frame/dispatch [::events/toggle-state :time-dd])}
+             [:div.dropdown-trigger
+              [:button.button
+               {:aria-haspopup true
+                :aria-controls "dropdown-menu"}
+               [:span "Time select"]
+               [:span.icon.is-small
+                [:i.fas.fa-angle-down {:aria-hidden true}]]]]
+             [:div#dropdown-menu.dropdown-menu {:role "menu"}
+              [:div.dropdown-content
+               [:a.dropdown-item "item1"]
+               [:a.dropdown-item "item2"]]
+              #_(mapv time-button button-ids)]]))))
 
 
 (defn main-panel []
@@ -45,9 +51,9 @@
    [:section.hero.is-primary.is-small
     [:div.hero-body
      [:p.title.is-small
-      "Nooze Aggregator"]]]
-   #_(time-buttons)
-   (time-dropdown)])
+      "Nooze Aggregator"]]
+    [:div.navbar.has-background-grey-lighter
+     [time-dropdown]]]])
 
 (comment
   (time-buttons))

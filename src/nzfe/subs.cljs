@@ -131,3 +131,8 @@
  ::display-all-authors?
  (fn [db]
    (:display-all-authors? db)))
+
+(re-frame/reg-sub
+ ::time-dd-active?
+ (fn [db]
+   (-> db :time-dd :active?)))

@@ -20,4 +20,5 @@
                            :tb3 ["1 day" "-d 1"]
                            :tb4 ["2 days" "-d 2"]
                            :tb5 ["3 days" "-d 3"]
-                           :tb6 ["Custom" :custom]}}})
+                           :tb6 ["Custom" :custom]}}
+   :time-dd {:active? true}})

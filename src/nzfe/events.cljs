@@ -16,3 +16,8 @@
    (when (= activate-id :tb6) (re-frame/dispatch [:toggle-show-custom-time-panel]))
    (assoc-in db [:time-button-bar :active] activate-id)))
 
+(re-frame/reg-event-db
+ ::toggle-state
+ (fn [db [_ control-id]]
+   (update-in db [control-id :active?] not)))
+
