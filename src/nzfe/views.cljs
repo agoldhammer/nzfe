@@ -17,7 +17,7 @@
 
 (defn time-buttons []
   (let [button-ids (re-frame/subscribe [::subs/get-time-button-ids])]
-    (into [:div.navbar.has-background-grey-lighter
+    (into [:div.dropdown-content
            {:on-click #(re-frame/dispatch [::events/set-active-time-button
                                            (keyword
                                             (-> % .-target .-id))])}]
@@ -28,22 +28,24 @@
   (let [#_#_button-ids @(re-frame/subscribe [::subs/get-time-button-ids])
         active? (re-frame/subscribe [::subs/time-dd-active?])]
 
-    (fn []
-      (into [:div#time-dd.dropdown
-             {:class (when @active? "is_active")
-              :on-click #(re-frame/dispatch [::events/toggle-state :time-dd])}
-             [:div.dropdown-trigger
-              [:button.button
-               {:aria-haspopup true
-                :aria-controls "dropdown-menu"}
-               [:span "Time select"]
-               [:span.icon.is-small
-                [:i.fas.fa-angle-down {:aria-hidden true}]]]]
-             [:div#dropdown-menu.dropdown-menu {:role "menu"}
-              [:div.dropdown-content
+    (into [:div#time-dd
+           {:class (if @active?
+                     "dropdown is-active"
+                     "dropdown")
+            :on-click #(re-frame/dispatch [::events/toggle-state :time-dd])}
+           [:div.dropdown-trigger
+            [:button.button.has-background-info-light
+             {:aria-haspopup true
+              :aria-controls "dropdown-menu"}
+             [:span.has-background-link-light "Time select"]
+             [:span.icon.is-small
+              [:i.fas.fa-angle-down {:aria-hidden true}]]]]
+           [:div#dropdown-menu.dropdown-menu {:role "menu"}
+            (time-buttons)
+            #_[:div.dropdown-content
                [:a.dropdown-item "item1"]
                [:a.dropdown-item "item2"]]
-              #_(mapv time-button button-ids)]]))))
+            #_(mapv time-button button-ids)]])))
 
 
 (defn main-panel []
@@ -53,7 +55,7 @@
      [:p.title.is-small
       "Nooze Aggregator"]]
     [:div.navbar.has-background-grey-lighter
-     [time-dropdown]]]])
+     (time-dropdown)]]])
 
 (comment
   (time-buttons))
