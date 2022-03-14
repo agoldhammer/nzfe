@@ -21,4 +21,6 @@
                            :tb4 ["2 days" "-d 2"]
                            :tb5 ["3 days" "-d 3"]
                            :tb6 ["Custom" :custom]}}
-   :time-dd {:active? true}})
+   :time-dd {:active? true}
+   :tabs {:active :tab0
+          :ids [:tab0 :tab1]}})

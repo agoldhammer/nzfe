@@ -21,3 +21,8 @@
  (fn [db [_ control-id]]
    (update-in db [control-id :active?] not)))
 
+(re-frame/reg-event-db
+ ::set-active-tab
+ (fn [db [_ tab-id]]
+   (assoc-in db [:tabs :active] tab-id)))
+

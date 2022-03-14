@@ -136,3 +136,8 @@
  ::time-dd-active?
  (fn [db]
    (-> db :time-dd :active?)))
+
+(re-frame/reg-sub
+ ::get-active-tab
+ (fn [db]
+   (-> db (get-in [:tabs :active]))))
