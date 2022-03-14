@@ -18,5 +18,6 @@ dev/
 .clj-kondo/
 *.code-workspace
 output.calva-repl
+package-lock.json
 
 
