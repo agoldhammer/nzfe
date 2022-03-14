@@ -37,7 +37,7 @@
 (re-frame/reg-event-db
  ::ajax-error
  (fn [db [_ details]]
-   (re-frame/dispatch [:alert (:status-text details)])
+   (re-frame/dispatch [::alert (:status-text details)])
    (.log js/console details)
    db))
 
@@ -61,13 +61,15 @@
                  :on-success [::got-cats]
                  :on-failure [::ajax-error]}}))
 
+(re-frame/reg-event-db
+ ::alert
+ (fn [db [_ msg]]
+   (assoc db :alert msg)))
+
+
 (comment
   (re-frame/dispatch [::get-cats])
 
-  (re-frame/reg-event-db
-   ::alert
-   (fn [db [_ msg]]
-     (assoc db :alert msg)))
 
   (re-frame/reg-event-db
    ::got-count

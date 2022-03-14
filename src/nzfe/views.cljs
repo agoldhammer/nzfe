@@ -58,9 +58,10 @@
   [:div
    [:section.hero.is-primary.is-small
     [:div.hero-body
-     [:p.title.is-small
-      "Nooze Aggregator"]
-     (time-dropdown)]
+     [:div.level
+      [:div.level-item [:p.title.is-small "Nooze Aggregator"]]
+      [:div.level-item (time-dropdown)]
+      [:div.level-item [:span.is-small "time"]]]]
     #_[:div.navbar.has-background-grey-lighter
        (time-dropdown)]]
    (tabber)])
