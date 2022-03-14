@@ -33,11 +33,13 @@
  (fn [db]
    (-> db (get-in [:tabs :active]))))
 
+(re-frame/reg-sub
+ ::item-count
+ (fn [db]
+   (-> db :navdata :count)))
+
 (comment
-  (re-frame/reg-sub
-   ::item-count
-   (fn [db]
-     (:count db)))
+
 
   (re-frame/reg-sub
    ::get-time-of-count
