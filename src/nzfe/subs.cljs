@@ -23,6 +23,15 @@
  (fn [db [_ button-id]]
    (nth (get-in db [:time-button-bar :ids button-id]) 0)))
 
+
+(re-frame/reg-sub
+ ::query-time
+ (fn [db]
+   (let [active-time-button @(re-frame/subscribe [::time-button-active-id])]
+     (if (= :tb6 active-time-button)
+       @(re-frame/subscribe [::get-formatted-custom-date])
+       (nth (get-in db [:time-button-bar :ids active-time-button]) 1)))))
+
 (re-frame/reg-sub
  ::time-dd-active?
  (fn [db]
@@ -36,7 +45,7 @@
 (re-frame/reg-sub
  ::item-count
  (fn [db]
-   (-> db :navdata :count)))
+   (-> db :count)))
 
 (re-frame/reg-sub
  ::cats-loading?
@@ -101,20 +110,26 @@
  (fn [db]
    (:display-all-authors? db)))
 
+(re-frame/reg-sub
+ ::get-time-of-count
+ (fn [db]
+   (:time-of-count db)))
+
+(re-frame/reg-sub
+ ::recent-loading?
+ (fn [db]
+   (:recent-loading? db)))
+
 (comment
 
-
-  (re-frame/reg-sub
-   ::get-time-of-count
-   (fn [db]
-     (:time-of-count db)))
+  @(re-frame/subscribe [::get-time-of-count])
 
 
 
-  (re-frame/reg-sub
-   ::recent-loading?
-   (fn [db]
-     (:recent-loading? db)))
+
+
+
+
 
 
 

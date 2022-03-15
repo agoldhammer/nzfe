@@ -32,10 +32,11 @@
     (into [:div#time-dd
            {:class (if @active?
                      "dropdown is-active"
-                     "dropdown")
+                     "dropdown tooltip")
             :on-click #(re-frame/dispatch [::events/toggle-state :time-dd])}
            [:div.dropdown-trigger
             [:i.fa-solid.fa-clock]
+            [:span.tooltiptext "Time frame selector"]
             #_[:button.button.has-background-info-light
                {:aria-haspopup true
                 :aria-controls "dropdown-menu"}
@@ -109,7 +110,7 @@
   []
   (let [statuses @(re-frame/subscribe [::subs/filtered-statuses])
         #_#_test-statuses [test-status]]
-    (into [:div.column.mr-2.scrollable]
+    (into [:div#art-col.column.mr-2.scrollable]
           (mapv make-article-card statuses))))
 
 (defn main-panel []
@@ -120,7 +121,8 @@
        [:div.level
         [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
         [:div.level-item (time-dropdown)]
-        [:div.level-item [:span.is-small.has-text-primary-light "sources"]]
+        [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
+                          [:span.tooltiptext "filter sources"]]]
         [:div.level-item [:span.is-small.has-text-primary-light "time"]]
         [:div.level-item [:p.is-small.has-text-primary-light (str count)]]]]]
      (tabber)
