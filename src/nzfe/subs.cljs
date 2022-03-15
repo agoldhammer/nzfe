@@ -38,6 +38,42 @@
  (fn [db]
    (-> db :navdata :count)))
 
+(re-frame/reg-sub
+ ::cats-loading?
+ (fn [db]
+   (:cats-loading? db)))
+
+(re-frame/reg-sub
+ ::categories
+ (fn [db]
+   (keys (get-in db [:navdata :cats]))))
+
+(re-frame/reg-sub
+ ::category
+ (fn [db [_ category]]
+   (get-in db [:navdata :cats category])))
+
+(re-frame/reg-sub
+ ::topics-by-category
+ (fn [db [_ category]]
+   (mapv #(:topic %1) (get-in db [:navdata :cats category]))))
+
+(re-frame/reg-sub
+ ::topic-descs-by-category
+ (fn [db [_ category]]
+   (mapv #((juxt :topic :desc) %1) (get-in db [:navdata :cats category]))))
+
+(re-frame/reg-sub
+ ::fulltopic
+ (fn [db [_ category topic]]
+   (let [topics (get-in db [:navdata :cats category])]
+     (first (filter #(= topic (:topic %1)) topics)))))
+
+(re-frame/reg-sub
+ ::topic-to-query
+ (fn [_ [_ category topic]]
+   (:query @(re-frame/subscribe [:fulltopic category topic]))))
+
 (comment
 
 
@@ -46,46 +82,16 @@
    (fn [db]
      (:time-of-count db)))
 
-  (re-frame/reg-sub
-   ::cats-loading?
-   (fn [db]
-     (:cats-loading? db)))
+
 
   (re-frame/reg-sub
    ::recent-loading?
    (fn [db]
      (:recent-loading? db)))
 
-  (re-frame/reg-sub
-   ::categories
-   (fn [db]
-     (keys (get-in db [:navdata :cats]))))
 
-  (re-frame/reg-sub
-   ::category
-   (fn [db [_ category]]
-     (get-in db [:navdata :cats category])))
 
-  (re-frame/reg-sub
-   ::topics-by-category
-   (fn [db [_ category]]
-     (mapv #(:topic %1) (get-in db [:navdata :cats category]))))
 
-  (re-frame/reg-sub
-   ::topic-descs-by-category
-   (fn [db [_ category]]
-     (mapv #((juxt :topic :desc) %1) (get-in db [:navdata :cats category]))))
-
-  (re-frame/reg-sub
-   ::fulltopic
-   (fn [db [_ category topic]]
-     (let [topics (get-in db [:navdata :cats category])]
-       (first (filter #(= topic (:topic %1)) topics)))))
-
-  (re-frame/reg-sub
-   ::topic-to-query
-   (fn [_ [_ category topic]]
-     (:query @(re-frame/subscribe [:fulltopic category topic]))))
 
   (re-frame/reg-sub
    ::get-display-text

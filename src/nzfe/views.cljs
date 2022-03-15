@@ -54,14 +54,14 @@
       [:li {:id :tab1 :class (if (= :tab1 active-tab-id) "is-active" "")
             :on-click #(re-frame/dispatch [::events/set-active-tab :tab1])} [:a "New"]]]]))
 
-(defn category-card
-  []
-  [:div.card
-   [:header.card-header.has-background-info.is-small
-    [:p.card-header-title.has-text-primary-light "Category"]]
-   [:div.card-content.has-background-light
-    [:div.content "Topic1"]
-    [:div.content "Topic2"]]])
+#_(defn category-card
+    [category]
+    [:div.card
+     [:header.card-header.has-background-info.is-small
+      [:p.card-header-title.has-text-primary-light category]]
+     [:div.card-content.has-background-light
+      [:div.content "Topic1"]
+      [:div.content "Topic2"]]])
 
 (defn content-card
   []
@@ -71,24 +71,57 @@
    [:div.card-content.has-background-light
     [:div.content "Lorem ipsum"]]])
 
+(defn recent-card
+  []
+  [:div.card
+   {:id "recent"
+    :on-click #(re-frame/dispatch [::events/get-recent])}
+   [:header.card-header.has-background-danger.is-small
+    [:p.card-header-title.has-text-primary-light "Latest!"]]])
+
+(defn topic-button
+  [[topic desc]]
+  [:div.content {:id topic
+                 :on-click #(re-frame/dispatch [::events/topic-req topic])}
+   desc])
+
+(defn category-card
+  [category]
+  (let [topic-descs @(re-frame/subscribe [::subs/topic-descs-by-category category])]
+    [:div.card
+     [:header.card-header.has-background-info.is-small
+      [:p.card-header-title.has-text-primary-light
+       {:on-click #(re-frame/dispatch [::events/category-req  category])}
+       (name category)]]
+     (into [:div.card-content.has-background-light]
+           (mapv #(topic-button %1) topic-descs))]))
+
+#_(defn category-cards []
+    (let [categories @(re-frame/subscribe [::subs/categories])]
+      (into [[:div (recent-button)]]
+            (mapv category-card categories))))
+
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])]
     [:div
-     [:section.hero.is-primary.is-small
+     [:section.hero.has-background-info.is-small
       [:div.hero-body
        [:div.level
-        [:div.level-item [:p.title.is-small "Nooze Aggregator"]]
+        [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
         [:div.level-item (time-dropdown)]
-        [:div.level-item [:span.is-small "sources"]]
-        [:div.level-item [:span.is-small "time"]]
-        [:div.level-item [:p.is-small (str count)]]]]
+        [:div.level-item [:span.is-small.has-text-primary-light "sources"]]
+        [:div.level-item [:span.is-small.has-text-primary-light "time"]]
+        [:div.level-item [:p.is-small.has-text-primary-light (str count)]]]]
       #_[:div.navbar.has-background-grey-lighter
          (time-dropdown)]]
      (tabber)
      [:section.columns.is-mobile
       [:div.column.is-one-quarter.ml-2 "col1"
-       (category-card)
-       (category-card)]
+       #_(category-cards)
+       (recent-card)
+       (category-card :Culture)
+       (content-card)
+       #_(category-card)]
       [:div.column.mr-2 "col2"
        (content-card)
        (content-card)]
