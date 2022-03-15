@@ -66,9 +66,49 @@
  (fn [db [_ msg]]
    (assoc db :alert msg)))
 
+;; auxiliary function to set up author-display-state section of db
+(defn set-author-display-states
+  "Given a seq of statuses, return map {auth: true} with key for each author"
+  [statuses]
+  (let [authors (distinct (map
+                           (comp string/upper-case :author) statuses))]
+    (zipmap authors (repeat true))))
+
+
+
+(re-frame/reg-event-fx
+ ::get-recent
+ (fn [{:keys [db]} _]
+   {:db (-> db
+            (assoc :recent-loading? true)
+            (assoc :display "Latest!"))
+    :http-xhrio {:method :get
+                 :uri "/json/recent"
+                 :timeout 10000
+                 :format (ajax/url-request-format :java)
+                 :response-format
+                 (ajax/json-response-format {:keywords? true})
+                 :on-success [::got-recent]
+                 :on-failure [::ajax-error]}}))
+
+(re-frame/reg-event-db
+ ::got-recent
+ (fn [db [_ result]]
+   (when (empty? result) (re-frame/dispatch [:alert "Server returned nothing"]))
+   (re-frame/dispatch [:reset-content-scroll-pos])
+   (re-frame/dispatch [:set-display-all-authors-flag true])
+   (->
+    db
+    (assoc :author-display-states (set-author-display-states result))
+    (assoc :recent-loading? false)
+    (assoc :recent result))))
+
+
+
 
 (comment
   (re-frame/dispatch [::get-cats])
+  (re-frame/dispatch [::get-recent])
 
 
   (re-frame/reg-event-db
@@ -80,14 +120,6 @@
       (assoc :cats-loading? false)
       (assoc :count (:count result)))))
 
-
-;; auxiliary function to set up author-display-state section of db
-  (defn set-author-display-states
-    "Given a seq of statuses, return map {auth: true} with key for each author"
-    [statuses]
-    (let [authors (distinct (map
-                             (comp string/upper-case :author) statuses))]
-      (zipmap authors (repeat true))))
 
 
   (re-frame/reg-event-db
@@ -113,17 +145,6 @@
                (zipmap authors (repeat true-or-false)))))))
 
 
-  (re-frame/reg-event-db
-   ::got-recent
-   (fn [db [_ result]]
-     (when (empty? result) (re-frame/dispatch [:alert "Server returned nothing"]))
-     (re-frame/dispatch [:reset-content-scroll-pos])
-     (re-frame/dispatch [:set-display-all-authors-flag true])
-     (->
-      db
-      (assoc :author-display-states (set-author-display-states result))
-      (assoc :recent-loading? false)
-      (assoc :recent result))))
 
 
 
@@ -142,20 +163,6 @@
 
 
 
-  (re-frame/reg-event-fx
-   ::get-recent
-   (fn [{:keys [db]} _]
-     {:db (-> db
-              (assoc :recent-loading? true)
-              (assoc :display "Latest!"))
-      :http-xhrio {:method :get
-                   :uri "/json/recent"
-                   :timeout 10000
-                   :format (ajax/url-request-format :java)
-                   :response-format
-                   (ajax/json-response-format {:keywords? true})
-                   :on-success [:got-recent]
-                   :on-failure [:ajax-error]}}))
 
 
   (re-frame/reg-event-fx

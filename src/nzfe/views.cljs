@@ -107,10 +107,10 @@
 (defn article-column
   "make column of articles"
   []
-  (let [#_#_statuses @(re-frame/subscribe [:filtered-statuses])
-        test-statuses [test-status]]
-    (into [:div.column.mr-2 "col2"]
-          (mapv make-article-card test-statuses))))
+  (let [statuses @(re-frame/subscribe [::subs/filtered-statuses])
+        #_#_test-statuses [test-status]]
+    (into [:div.column.mr-2.scrollable]
+          (mapv make-article-card statuses))))
 
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])]

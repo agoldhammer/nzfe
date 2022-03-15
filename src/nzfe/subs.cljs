@@ -74,6 +74,33 @@
  (fn [_ [_ category topic]]
    (:query @(re-frame/subscribe [:fulltopic category topic]))))
 
+(re-frame/reg-sub
+ ::get-active-authors
+ (fn [db]
+   (into #{}
+         (map first (filter second (:author-display-states db))))))
+
+(re-frame/reg-sub
+ ::get-recent
+ (fn [db]
+   (:recent db)))
+
+(defn status-author-active?
+  [status active-authors]
+  (some #{(string/upper-case (:author status))} active-authors))
+
+(re-frame/reg-sub
+ ::filtered-statuses
+ (fn [db]
+   (let [active-authors @(re-frame/subscribe [::get-active-authors])
+         statuses (:recent db)]
+     (filterv #(status-author-active? %1 active-authors) statuses))))
+
+(re-frame/reg-sub
+ ::display-all-authors?
+ (fn [db]
+   (:display-all-authors? db)))
+
 (comment
 
 
@@ -123,30 +150,4 @@
    (fn [db [_ n]]
      (fake-status-list n db)))
 ;;;;;;;
-
-  (re-frame/reg-sub
-   ::get-active-authors
-   (fn [db]
-     (into #{}
-           (map first (filter second (:author-display-states db))))))
-
-  (re-frame/reg-sub
-   ::get-recent
-   (fn [db]
-     (:recent db)))
-
-  (defn status-author-active?
-    [status active-authors]
-    (some #{(string/upper-case (:author status))} active-authors))
-
-  (re-frame/reg-sub
-   ::filtered-statuses
-   (fn [db]
-     (let [active-authors @(re-frame/subscribe [:get-active-authors])
-           statuses (:recent db)]
-       (filterv #(status-author-active? %1 active-authors) statuses))))
-
-  (re-frame/reg-sub
-   ::display-all-authors?
-   (fn [db]
-     (:display-all-authors? db))))
+  )
