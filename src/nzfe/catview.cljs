@@ -22,11 +22,11 @@
   [category]
   (let [topic-descs @(re-frame/subscribe [::subs/topic-descs-by-category category])]
     [:div.card
-     [:header.card-header.has-background-info.is-small
+     [:header.card-header.has-background-info.is-small.cat-content
       [:p.card-header-title.has-text-primary-light
        {:on-click #(re-frame/dispatch [::events/category-req  category])}
        (name category)]]
-     (into [:div.card-content.has-background-light]
+     (into [:div.card-content.has-background-light.topic-content]
            (mapv #(topic-button %1) topic-descs))]))
 
 (defn category-cards []

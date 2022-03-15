@@ -83,16 +83,16 @@
 
 ;; --- end of urlize-related funcs ----------
 
-(defn content-card
-  []
-  [:div.card
-   [:header.card-header.has-background-warning.is-small
-    [:p.card-header-title.has-text-primary-light "header"]]
-   [:div.card-content.has-background-light
-    [:div.content "Lorem ipsum"]]])
+#_(defn content-card
+    []
+    [:div.card
+     [:header.card-header.has-background-warning.is-small
+      [:p.card-header-title.has-text-primary-light "header"]]
+     [:div.card-content.has-background-light
+      [:div.content "Lorem ipsum"]]])
 
-(def test-status {:source "Times" :created_at "2022/03/11" :author "x"
-                  :text "Lorem ipsum"})
+#_(def test-status {:source "Times" :created_at "2022/03/11" :author "x"
+                    :text "Lorem ipsum"})
 
 (defn make-article-card
   "from status, create article card"
@@ -103,15 +103,17 @@
    [:div.card-content.has-background-light
     [:div.content (urlize text)]]])
 
-(make-article-card test-status)
-
 (defn article-column
   "make column of articles"
   []
   (let [statuses @(re-frame/subscribe [::subs/filtered-statuses])
+        ;; TODO change name of recent-loading?
+        loading? @(re-frame/subscribe [::subs/recent-loading?])
         #_#_test-statuses [test-status]]
     (into [:div#art-col.column.mr-2.scrollable]
-          (mapv make-article-card statuses))))
+          (if loading?
+            [[:img {:src "static/hourglass.gif" :alt "hourglass"}]]
+            (mapv make-article-card statuses)))))
 
 ;; TODO alerting mechanism, custom query
 (defn main-panel []
@@ -133,6 +135,8 @@
      [:section.columns.is-mobile
       (cv/category-column)
       (article-column)
+      #_[:div#art-col.column.mr-2.scrollable
+         [:div.lds-grid] [:div] [:div] [:div] [:div] [:div] [:div] [:div] [:div]]
 
       #_[:div.column.mr-2 "col2"
          #_(article-view)

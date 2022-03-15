@@ -8,3 +8,5 @@ Created with:
     display switching
     throbber
     rejigger queries
+    hamburger menu
+    
