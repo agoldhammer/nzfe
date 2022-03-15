@@ -1,3 +1,10 @@
 Created with:
     lein new re-frame nzfe +test +10x +re-frisk +re-pressed
     
+
+    alerting mechanism
+    custom query
+    author filtering
+    display switching
+    throbber
+    rejigger queries

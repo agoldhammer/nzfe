@@ -113,6 +113,7 @@
     (into [:div#art-col.column.mr-2.scrollable]
           (mapv make-article-card statuses))))
 
+;; TODO alerting mechanism, custom query
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])
         time-of-count @(re-frame/subscribe [::subs/get-time-of-count])]
