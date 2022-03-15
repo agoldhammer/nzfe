@@ -96,10 +96,15 @@
      (into [:div.card-content.has-background-light]
            (mapv #(topic-button %1) topic-descs))]))
 
-#_(defn category-cards []
-    (let [categories @(re-frame/subscribe [::subs/categories])]
-      (into [[:div (recent-button)]]
-            (mapv category-card categories))))
+(defn category-cards []
+  (let [categories @(re-frame/subscribe [::subs/categories])]
+    (mapv category-card categories)))
+
+(defn category-column
+  "make category column"
+  []
+  (into [:div.column.is-one-quarter.ml-2 "col1"]
+        (into [(recent-card)] (category-cards))))
 
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])]
@@ -111,17 +116,11 @@
         [:div.level-item (time-dropdown)]
         [:div.level-item [:span.is-small.has-text-primary-light "sources"]]
         [:div.level-item [:span.is-small.has-text-primary-light "time"]]
-        [:div.level-item [:p.is-small.has-text-primary-light (str count)]]]]
-      #_[:div.navbar.has-background-grey-lighter
-         (time-dropdown)]]
+        [:div.level-item [:p.is-small.has-text-primary-light (str count)]]]]]
      (tabber)
      [:section.columns.is-mobile
-      [:div.column.is-one-quarter.ml-2 "col1"
-       #_(category-cards)
-       (recent-card)
-       (category-card :Culture)
-       (content-card)
-       #_(category-card)]
+      (category-column)
+
       [:div.column.mr-2 "col2"
        (content-card)
        (content-card)]
