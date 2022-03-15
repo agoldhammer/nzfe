@@ -1,5 +1,7 @@
 (ns nzfe.views
   (:require
+   [clojure.string :as string]
+   [goog.string :as gstring]
    [nzfe.catview :as cv]
    [re-frame.core :as re-frame]
    [nzfe.events :as events]
@@ -55,6 +57,31 @@
       [:li {:id :tab1 :class (if (= :tab1 active-tab-id) "is-active" "")
             :on-click #(re-frame/dispatch [::events/set-active-tab :tab1])} [:a "New"]]]]))
 
+;; functions below are used in building articles
+;; need to turn urls into links and eliminate from text
+
+(defn link-url
+  [url]
+  [:a {:href url :target "_blank"} " ...more \u21aa"])
+
+(def re-url #"https?://\S+")
+
+(defn extract-urls
+  [text]
+  (re-seq re-url text))
+
+(defn suppress-urls
+  [text]
+  (string/replace text re-url ""))
+
+(defn urlize
+  [text]
+  (let [urls (extract-urls text)
+        modtext (gstring/unescapeEntities (suppress-urls text))]
+    (into [:p.art-content modtext] (mapv link-url urls))))
+
+;; --- end of urlize-related funcs ----------
+
 (defn content-card
   []
   [:div.card
@@ -63,7 +90,27 @@
    [:div.card-content.has-background-light
     [:div.content "Lorem ipsum"]]])
 
+(def test-status {:source "Times" :created_at "2022/03/11" :author "x"
+                  :text "Lorem ipsum"})
 
+(defn make-article-card
+  "from status, create article card"
+  [{:keys [source created_at author text]}]
+  [:div.card
+   [:header.card-header.has-background-info.is-small
+    [:p.card-header-title.has-text-primary-light (string/join " " [author created_at source])]]
+   [:div.card-content.has-background-light
+    [:div.content (urlize text)]]])
+
+(make-article-card test-status)
+
+(defn article-column
+  "make column of articles"
+  []
+  (let [#_#_statuses @(re-frame/subscribe [:filtered-statuses])
+        test-statuses [test-status]]
+    (into [:div.column.mr-2 "col2"]
+          (mapv make-article-card test-statuses))))
 
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])]
@@ -79,10 +126,12 @@
      (tabber)
      [:section.columns.is-mobile
       (cv/category-column)
+      (article-column)
 
-      [:div.column.mr-2 "col2"
-       (content-card)
-       (content-card)]
+      #_[:div.column.mr-2 "col2"
+         #_(article-view)
+         (content-card)
+         #_(content-card)]
       #_[:div.column.is-one-quarter "col3"]]]))
 
 (comment

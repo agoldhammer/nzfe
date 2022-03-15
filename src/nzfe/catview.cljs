@@ -10,7 +10,7 @@
    {:id "recent"
     :on-click #(re-frame/dispatch [::events/get-recent])}
    [:header.card-header.has-background-danger.is-small
-    [:p.card-header-title.has-text-primary-light "Latest!"]]])
+    [:p#latest.card-header-title.has-text-primary-light "Latest!"]]])
 
 (defn topic-button
   [[topic desc]]
