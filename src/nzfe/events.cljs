@@ -45,7 +45,8 @@
    (->
     db
     (assoc :cats-loading? false)
-    (assoc :navdata result))))
+    (assoc :count (:count result))
+    (assoc :navdata (dissoc result :count)))))
 
 (re-frame/reg-event-fx
  ::get-cats
@@ -92,7 +93,7 @@
 (re-frame/reg-event-db
  ::got-recent
  (fn [db [_ result]]
-   (when (empty? result) (re-frame/dispatch [:alert "Server returned nothing"]))
+   (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
    (re-frame/dispatch [::reset-content-scroll-pos])
    (re-frame/dispatch [::set-display-all-authors-flag true])
    (->
@@ -256,13 +257,15 @@
 
 
 (comment
+  (re-frame/dispatch [::ajax-error {:status-text "screwup"}])
   (re-frame/dispatch [::get-count])
   (re-frame/dispatch [::get-cats])
   (re-frame/dispatch [::get-recent])
   #_(t/format (t/formatter "yyyy-MM-dd hh:mm:ssZ") (t/now))
-  (t/instant)
+  (str (t/instant))
   (t/now)
+  (t/format :iso-zoned-date-time (t/zoned-date-time))
   ;; 3 hours before
-  (t/<< (t/now) (t/new-duration 3 :hours)))
+  (str (t/<< (t/now) (t/new-duration 3 :hours))))
 
 

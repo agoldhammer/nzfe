@@ -114,7 +114,8 @@
           (mapv make-article-card statuses))))
 
 (defn main-panel []
-  (let [count @(re-frame/subscribe [::subs/item-count])]
+  (let [count @(re-frame/subscribe [::subs/item-count])
+        time-of-count @(re-frame/subscribe [::subs/get-time-of-count])]
     [:div
      [:section.hero.has-background-info.is-small
       [:div.hero-body
@@ -123,8 +124,10 @@
         [:div.level-item (time-dropdown)]
         [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
                           [:span.tooltiptext "filter sources"]]]
-        [:div.level-item [:span.is-small.has-text-primary-light "time"]]
-        [:div.level-item [:p.is-small.has-text-primary-light (str count)]]]]]
+        [:div.level-item [:span.is-small.has-text-primary-light.tooltip (str time-of-count)
+                          [:span.tooltiptext "time of count"]]]
+        [:div.level-item [:p.is-small.has-text-primary-light.tooltip count
+                          [:span.tooltiptext "#arts in db"]]]]]]
      (tabber)
      [:section.columns.is-mobile
       (cv/category-column)
