@@ -9,6 +9,11 @@
      (:name db)))
 
 (re-frame/reg-sub
+ ::alert?
+ (fn [db]
+   (:alert db)))
+
+(re-frame/reg-sub
  ::get-time-button-ids
  (fn [db]
    (keys (get-in db [:time-button-bar :ids]))))

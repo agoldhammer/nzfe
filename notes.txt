@@ -3,7 +3,7 @@ Created with:
     
     -init page
     - set time
-    alerting mechanism
+    - alerting mechanism
     custom query
     author filtering
     display switching

@@ -130,12 +130,39 @@
    (cv/category-column)
    (article-column)])
 
-;; TODO alerting mechanism, custom query
-(defn main-panel []
+(defn top-display
+  []
   [:div.main-view
    (hero-display)
-   (tabber)
-   (classic-cols-display)])
+   (tabber)])
+
+(defn classic-panel
+  []
+  (conj (top-display) (classic-cols-display)))
+
+(defn alert-view
+  [msg]
+  ;; close alert after 5 secs
+  (js/setTimeout #(re-frame/dispatch [::events/alert nil]) 5000)
+  [:div.modal.is-active
+   [:div.modal-background]
+   [:div.modal-card
+    [:header.modal-card-head
+     [:p.modal-card-title "Error!"]
+     [:button.delete]]
+    [:div.modal-card-body
+     [:p (str msg)]]
+    [:footer.modal-card-foot
+     [:button.button
+      {:on-click #(re-frame/dispatch [::events/alert nil])}
+      "Close"]]]])
+
+;; TODO alerting mechanism, custom query
+(defn main-panel []
+  (let [error-msg @(re-frame/subscribe [::subs/alert?])]
+    (if error-msg
+      (conj (top-display) (alert-view error-msg))
+      (classic-panel))))
 
 (comment
   (time-buttons))

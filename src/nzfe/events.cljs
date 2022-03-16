@@ -172,8 +172,6 @@
 (re-frame/reg-event-db
  ::initialize-content
  (fn [db _]
-   ;; set timer to refresh stats every 10 mins
-   #_(js/setInterval #(re-frame/dispatch [:get-count]) 60000)
    (re-frame/dispatch [::get-count])
    (re-frame/dispatch [::get-cats])
    (re-frame/dispatch [::get-recent])
