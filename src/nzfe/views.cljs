@@ -1,11 +1,11 @@
 (ns nzfe.views
-  (:require
-   [clojure.string :as string]
-   [goog.string :as gstring]
-   [nzfe.catview :as cv]
-   [re-frame.core :as re-frame]
-   [nzfe.events :as events]
-   [nzfe.subs :as subs]))
+  (:require [clojure.string :as string]
+            [goog.string :as gstring]
+            [nzfe.authview :as authview]
+            [nzfe.catview :as cv]
+            [nzfe.events :as events]
+            [nzfe.subs :as subs]
+            [re-frame.core :as re-frame]))
 
 ;; time buttons
 
@@ -160,6 +160,7 @@
 ;; TODO alerting mechanism, custom query
 (defn main-panel []
   (let [error-msg @(re-frame/subscribe [::subs/alert?])]
+    (conj (top-display) (authview/author-panel))
     (if error-msg
       (conj (top-display) (alert-view error-msg))
       (classic-panel))))

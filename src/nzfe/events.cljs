@@ -94,8 +94,8 @@
  ::got-recent
  (fn [db [_ result]]
    (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
-   (re-frame/dispatch [::reset-content-scroll-pos])
-   (re-frame/dispatch [::set-display-all-authors-flag true])
+   #_(re-frame/dispatch [::reset-content-scroll-pos])
+   #_(re-frame/dispatch [::set-display-all-authors-flag true])
    (->
     db
     (assoc :author-display-states (set-author-display-states result))
@@ -245,12 +245,12 @@
    (assoc-in db [:custom-date start-or-end] date)))
 
 
-(re-frame/reg-event-db
- ::reset-content-scroll-pos
- (fn [db]
-   (let [content (.getElementById js/document "art-col")]
-     (aset content "scrollTop" 0))
-   db))
+#_(re-frame/reg-event-db
+   ::reset-content-scroll-pos
+   (fn [db]
+     (let [content (.getElementById js/document "art-col")]
+       (aset content "scrollTop" 0))
+     db))
 
 
 

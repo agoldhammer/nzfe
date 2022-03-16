@@ -125,6 +125,21 @@
  (fn [db]
    (:recent-loading? db)))
 
+(re-frame/reg-sub
+ ::get-authors
+ (fn [_]
+   (sort (keys @(re-frame/subscribe [::get-author-display-states])))))
+
+(re-frame/reg-sub
+ ::get-author-display-states
+ (fn [db]
+   (:author-display-states db)))
+
+#_(re-frame/reg-sub
+   ::get-author-display-state
+   (fn [db [_ author]]
+     (get-in db [:author-display-states author])))
+
 (comment
 
   @(re-frame/subscribe [::get-time-of-count])
@@ -150,20 +165,7 @@
     [n db]
     (take n (repeat (:dummy-list db))))
 
-  (re-frame/reg-sub
-   ::get-authors
-   (fn [_]
-     (sort (keys @(re-frame/subscribe [:get-author-display-states])))))
 
-  (re-frame/reg-sub
-   ::get-author-display-states
-   (fn [db]
-     (:author-display-states db)))
-
-  (re-frame/reg-sub
-   ::get-author-display-state
-   (fn [db [_ author]]
-     (get-in db [:author-display-states author])))
 
   (re-frame/reg-sub
    ::get-fake-status-list
