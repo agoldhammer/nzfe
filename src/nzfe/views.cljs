@@ -133,10 +133,15 @@
 
 (defn blank-section
   []
-  [:section.is-mobile
-   [:div.control
-    [:label.checkbox
-     [:input {:type :checkbox :checked true}]]]])
+  (authview/authboxes)
+  #_[:section.columns.is-mobile
+     [:div#art-col.column.is-1.mr-4.scrollable
+      [:div.level
+       [:div.level-item
+        [:div.control
+         [:label.checkbox
+          [:input {:type :checkbox :checked true :style {:margin 8}
+                   :on-change #(println "clkd")}] "Yo!"]]]]]])
 
 (defn top-display
   []
@@ -167,11 +172,13 @@
 
 ;; TODO alerting mechanism, custom query
 (defn main-panel []
-  (let [error-msg @(re-frame/subscribe [::subs/alert?])]
-    #_(conj (top-display) (blank-section))
-    (if error-msg
-      (conj (top-display) (alert-view error-msg))
-      (classic-panel))))
+  (let [error-msg @(re-frame/subscribe [::subs/alert?])
+        now-displaying @(re-frame/subscribe [::subs/now-displaying])]
+    (condp = now-displaying
+      :authors (conj (top-display) (blank-section))
+      :classic (if error-msg
+                 (conj (top-display) (alert-view error-msg))
+                 (classic-panel)))))
 
 (comment
   (time-buttons))

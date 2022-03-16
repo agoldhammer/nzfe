@@ -9,6 +9,11 @@
      (:name db)))
 
 (re-frame/reg-sub
+ ::now-displaying
+ (fn [db]
+   (:now-displaying db)))
+
+(re-frame/reg-sub
  ::alert?
  (fn [db]
    (:alert db)))

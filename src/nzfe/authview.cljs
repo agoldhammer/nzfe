@@ -4,22 +4,37 @@
    [nzfe.events :as events]
    [nzfe.subs :as subs]))
 
+(defn authbox
+  "make author checkbox"
+  [author]
+  [:div.level
+   [:div.control
+    [:label.checkbox
+     [:input {:type :checkbox :checked true :style {:margin 12}
+              :on-change #(println "clkd")}] author]]])
+
+(defn authboxes
+  "make sequence of authboxes from author list"
+  []
+  (let [authors @(re-frame/subscribe [::subs/get-authors])]
+    [:section.columns.is-mobile
+     (into
+      [:div.auth-col.column.is-12.mr-4.scrollable]
+      (mapv authbox authors))]))
+
+(defn set-or-reset-display-author
+  []
+  (let [state @(re-frame/subscribe [::subs/now-displaying])]
+    (println "sorr " state)
+    (if (= state :authors)
+      (re-frame/dispatch [::events/set-now-displaying :classic])
+      (re-frame/dispatch [::events/set-now-displaying :authors]))))
+
+
 (defn author-dd
   "view/select authors to display"
   []
-  (let [authors @(re-frame/subscribe [::subs/get-authors])]
-    #_(println authors)
-    [:div#authsel.dropdown.is-large
-     [:div.dropdown-trigger.tooltip
-      [:span.is-small.tooltiptext "Select authors to display"]
-      [:i.fa-solid.fa-person]
-      [:div.dropdown-menu
-       [:div.dropdown-content
-        [:a.dropdown-item.is-active "item"]
-        [:a.dropdown-item "item2"]
-        #_[:a.dropdown-item
-           [:div.control
-            [:label.checkbox
-             [:input {:type :checkbox :checked true}]]]]
-        #_[:label.checkbox
-           [:input {:type "checkbox"} "chk2"]]]]]]))
+  [:div.content.tooltip
+   {:on-click set-or-reset-display-author}
+   [:i.fa-solid.fa-person]
+   [:span.is-small.tooltiptext "Select authors to display"]])

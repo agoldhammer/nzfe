@@ -2,6 +2,7 @@
 
 (def default-db
   {:name "re-frame"
+   :now-displaying :classic
    :default-set true
    :show-custom-time-panel? false
    :cats-loading? false

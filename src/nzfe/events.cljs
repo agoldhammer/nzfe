@@ -111,7 +111,10 @@
     (assoc :cats-loading? false)
     (assoc :count (:count result)))))
 
-
+(re-frame/reg-event-db
+ ::set-now-displaying
+ (fn [db [_ state]]
+   (assoc db :now-displaying state)))
 
 (re-frame/reg-event-db
  ::toggle-author-display-state
