@@ -83,17 +83,6 @@
 
 ;; --- end of urlize-related funcs ----------
 
-#_(defn content-card
-    []
-    [:div.card
-     [:header.card-header.has-background-warning.is-small
-      [:p.card-header-title.has-text-primary-light "header"]]
-     [:div.card-content.has-background-light
-      [:div.content "Lorem ipsum"]]])
-
-#_(def test-status {:source "Times" :created_at "2022/03/11" :author "x"
-                    :text "Lorem ipsum"})
-
 (defn make-article-card
   "from status, create article card"
   [{:keys [source created_at author text]}]
@@ -115,34 +104,38 @@
             [[:img {:src "static/hourglass.gif" :alt "hourglass"}]]
             (mapv make-article-card statuses)))))
 
-;; TODO alerting mechanism, custom query
-(defn main-panel []
+(defn art-count-display
+  []
   (let [count @(re-frame/subscribe [::subs/item-count])
         time-of-count @(re-frame/subscribe [::subs/get-time-of-count])]
-    [:div.main-view
-     [:section.hero.has-background-info.is-small
-      [:div.hero-body
-       [:div.level
-        [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
-        [:div.level-item (time-dropdown)]
-        [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
-                          [:span.tooltiptext "filter sources"]]]
-        [:div.level-item [:span.has-text-primary-light.tooltip.time-count (str count " items at " time-of-count)
-                          [:span.tooltiptext "time/count of db items"]]]
-        #_[:div.level-item [:p.is-small.has-text-primary-light.tooltip count
-                            [:span.tooltiptext "#arts in db"]]]]]]
-     (tabber)
-     [:section.columns.is-mobile
-      (cv/category-column)
-      (article-column)
-      #_[:div#art-col.column.mr-2.scrollable
-         [:div.lds-grid] [:div] [:div] [:div] [:div] [:div] [:div] [:div] [:div]]
+    [:div.level-item
+     {:on-click #(re-frame/dispatch [::events/get-count])}
+     [:span.has-text-primary-light.tooltip.time-count (str count " items at " time-of-count)
+      [:span.tooltiptext "click to update count"]]]))
 
-      #_[:div.column.mr-2 "col2"
-         #_(article-view)
-         (content-card)
-         #_(content-card)]
-      #_[:div.column.is-one-quarter "col3"]]]))
+(defn hero-display
+  []
+  [:section.hero.has-background-info.is-small
+   [:div.hero-body
+    [:div.level
+     [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
+     [:div.level-item (time-dropdown)]
+     [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
+                       [:span.tooltiptext "filter sources"]]]
+     (art-count-display)]]])
+
+(defn classic-cols-display
+  []
+  [:section.columns.is-mobile
+   (cv/category-column)
+   (article-column)])
+
+;; TODO alerting mechanism, custom query
+(defn main-panel []
+  [:div.main-view
+   (hero-display)
+   (tabber)
+   (classic-cols-display)])
 
 (comment
   (time-buttons))
