@@ -110,7 +110,7 @@
         ;; TODO change name of recent-loading?
         loading? @(re-frame/subscribe [::subs/recent-loading?])
         #_#_test-statuses [test-status]]
-    (into [:div#art-col.column.mr-2.scrollable]
+    (into [:div#art-col.column.is-8.mr-4.scrollable]
           (if loading?
             [[:img {:src "static/hourglass.gif" :alt "hourglass"}]]
             (mapv make-article-card statuses)))))
@@ -119,7 +119,7 @@
 (defn main-panel []
   (let [count @(re-frame/subscribe [::subs/item-count])
         time-of-count @(re-frame/subscribe [::subs/get-time-of-count])]
-    [:div
+    [:div.main-view
      [:section.hero.has-background-info.is-small
       [:div.hero-body
        [:div.level
@@ -127,10 +127,10 @@
         [:div.level-item (time-dropdown)]
         [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
                           [:span.tooltiptext "filter sources"]]]
-        [:div.level-item [:span.is-small.has-text-primary-light.tooltip (str time-of-count)
-                          [:span.tooltiptext "time of count"]]]
-        [:div.level-item [:p.is-small.has-text-primary-light.tooltip count
-                          [:span.tooltiptext "#arts in db"]]]]]]
+        [:div.level-item [:span.has-text-primary-light.tooltip.time-count (str count " items at " time-of-count)
+                          [:span.tooltiptext "time/count of db items"]]]
+        #_[:div.level-item [:p.is-small.has-text-primary-light.tooltip count
+                            [:span.tooltiptext "#arts in db"]]]]]]
      (tabber)
      [:section.columns.is-mobile
       (cv/category-column)

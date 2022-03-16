@@ -1,7 +1,8 @@
 Created with:
     lein new re-frame nzfe +test +10x +re-frisk +re-pressed
     
-
+    init page
+    set time
     alerting mechanism
     custom query
     author filtering
@@ -9,4 +10,3 @@ Created with:
     throbber
     rejigger queries
     hamburger menu
-    

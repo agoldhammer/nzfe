@@ -199,8 +199,8 @@
 (re-frame/reg-event-db
  ::category-req
  (fn [db [_ category]]
-   (let [time-part @(re-frame/subscribe [:query-time])
-         topics    @(re-frame/subscribe [:topics-by-category category])
+   (let [time-part @(re-frame/subscribe [::subs/query-time])
+         topics    @(re-frame/subscribe [::subs/topics-by-category category])
          text-part (string/join (map #(str " *" %1) topics))]
      (re-frame/dispatch [::set-display (string/join " " [time-part text-part])])
      (re-frame/dispatch [::get-query (string/join " " [time-part text-part])]))

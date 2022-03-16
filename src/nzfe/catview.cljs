@@ -36,5 +36,5 @@
 (defn category-column
   "make category column"
   []
-  (into [:div.column.is-one-quarter.ml-2.scrollable]
+  (into [:div.column.is-4.ml-1.scrollable]
         (into [(recent-card)] (category-cards))))

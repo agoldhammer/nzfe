@@ -20,5 +20,6 @@
 #_:clj-kondo/ignore
 (defn init []
   (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::events/initialize-content])
   (dev-setup)
   (mount-root))
