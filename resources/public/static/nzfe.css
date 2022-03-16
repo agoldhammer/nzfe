@@ -5,7 +5,7 @@
 }
 
 .hero {
-  max-height: 10vh;
+  max-height: 15vh;
 }
 
 .tabs {
@@ -18,7 +18,7 @@
 
 .columns {
   position: relative;
-  max-height: 85vh;
+  max-height: 80vh;
   overflow: hidden;
   margin-right: 3px;
 }
@@ -82,7 +82,7 @@
 }
 
 #latest:hover,
-.cat-content :hover,
-.topic-content :hover {
+.cat-content:hover,
+.topic-content:hover {
   background-color: aquamarine;
 }

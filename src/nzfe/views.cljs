@@ -120,8 +120,9 @@
     [:div.level
      [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
      [:div.level-item (time-dropdown)]
-     [:div.level-item [:span.is-small.has-text-primary-light.tooltip "sources"
-                       [:span.tooltiptext "filter sources"]]]
+     [:div.level-item #_[:span.is-small.has-text-primary-light.tooltip "sources"
+                         [:span.tooltiptext "filter sources"]]
+      (authview/author-dd)]
      (art-count-display)]]])
 
 (defn classic-cols-display
@@ -129,6 +130,13 @@
   [:section.columns.is-mobile
    (cv/category-column)
    (article-column)])
+
+(defn blank-section
+  []
+  [:section.is-mobile
+   [:div.control
+    [:label.checkbox
+     [:input {:type :checkbox :checked true}]]]])
 
 (defn top-display
   []
@@ -160,7 +168,7 @@
 ;; TODO alerting mechanism, custom query
 (defn main-panel []
   (let [error-msg @(re-frame/subscribe [::subs/alert?])]
-    (conj (top-display) (authview/author-panel))
+    #_(conj (top-display) (blank-section))
     (if error-msg
       (conj (top-display) (alert-view error-msg))
       (classic-panel))))
