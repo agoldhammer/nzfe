@@ -7,6 +7,6 @@ Created with:
     custom query
     author filtering
     display switching
-    throbber
+    - throbber
     rejigger queries
     hamburger menu

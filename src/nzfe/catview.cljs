@@ -14,19 +14,19 @@
 
 (defn topic-button
   [[topic desc]]
-  [:div.content {:id topic
-                 :on-click #(re-frame/dispatch [::events/topic-req topic])}
+  [:div.content.topic-content {:id topic
+                               :on-click #(re-frame/dispatch [::events/topic-req topic])}
    desc])
 
 (defn category-card
   [category]
   (let [topic-descs @(re-frame/subscribe [::subs/topic-descs-by-category category])]
     [:div.card
-     [:header.card-header.has-background-info.is-small.cat-content
-      [:p.card-header-title.has-text-primary-light
+     [:header.card-header.has-background-info.is-small
+      [:p.card-header-title.has-text-primary-light.cat-content
        {:on-click #(re-frame/dispatch [::events/category-req  category])}
        (name category)]]
-     (into [:div.card-content.has-background-light.topic-content]
+     (into [:div.card-content.has-background-light]
            (mapv #(topic-button %1) topic-descs))]))
 
 (defn category-cards []
@@ -36,5 +36,5 @@
 (defn category-column
   "make category column"
   []
-  (into [:div.column.is-4.ml-1.scrollable]
+  (into [:div.column.is-5.ml-1.scrollable]
         (into [(recent-card)] (category-cards))))
