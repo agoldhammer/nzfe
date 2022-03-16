@@ -122,7 +122,7 @@
      [:div.level-item (time-dropdown)]
      [:div.level-item #_[:span.is-small.has-text-primary-light.tooltip "sources"
                          [:span.tooltiptext "filter sources"]]
-      (authview/author-dd)]
+      (authview/author-select-icon)]
      (art-count-display)]]])
 
 (defn classic-cols-display

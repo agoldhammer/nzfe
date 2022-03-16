@@ -25,13 +25,12 @@
 (defn set-or-reset-display-author
   []
   (let [state @(re-frame/subscribe [::subs/now-displaying])]
-    (println "sorr " state)
     (if (= state :authors)
       (re-frame/dispatch [::events/set-now-displaying :classic])
       (re-frame/dispatch [::events/set-now-displaying :authors]))))
 
 
-(defn author-dd
+(defn author-select-icon
   "view/select authors to display"
   []
   [:div.content.tooltip
