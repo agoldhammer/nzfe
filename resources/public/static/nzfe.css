@@ -25,6 +25,9 @@
 
 .scrollable {
   overflow-y: auto;
+  margin-left: 2px;
+  padding-left: 12px;
+  padding-right: 4px;
 }
 /* tooltip */
 

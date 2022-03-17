@@ -263,6 +263,7 @@
   #_(t/format (t/formatter "yyyy-MM-dd hh:mm:ssZ") (t/now))
   (str (t/instant))
   (t/now)
+  (t/date (t/now))
   (t/format :iso-zoned-date-time (t/zoned-date-time))
   ;; 3 hours before
   (str (t/<< (t/now) (t/new-duration 3 :hours))))
