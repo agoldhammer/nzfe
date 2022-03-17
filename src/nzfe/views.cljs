@@ -131,27 +131,11 @@
    (cv/category-column)
    (article-column)])
 
-(defn blank-section
-  []
-  (authview/authboxes)
-  #_[:section.columns.is-mobile
-     [:div#art-col.column.is-1.mr-4.scrollable
-      [:div.level
-       [:div.level-item
-        [:div.control
-         [:label.checkbox
-          [:input {:type :checkbox :checked true :style {:margin 8}
-                   :on-change #(println "clkd")}] "Yo!"]]]]]])
-
 (defn top-display
   []
   [:div.main-view
    (hero-display)
    (tabber)])
-
-(defn classic-panel
-  []
-  (conj (top-display) (classic-cols-display)))
 
 (defn alert-view
   [msg]
@@ -175,10 +159,10 @@
   (let [error-msg @(re-frame/subscribe [::subs/alert?])
         now-displaying @(re-frame/subscribe [::subs/now-displaying])]
     (condp = now-displaying
-      :authors (conj (top-display) (blank-section))
+      :authors (conj (top-display) (authview/authboxes))
       :classic (if error-msg
                  (conj (top-display) (alert-view error-msg))
-                 (classic-panel)))))
+                 (conj (top-display) (classic-cols-display))))))
 
 (comment
   (time-buttons))

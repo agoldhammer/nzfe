@@ -73,8 +73,6 @@
                            (comp string/upper-case :author) statuses))]
     (zipmap authors (repeat true))))
 
-
-
 (re-frame/reg-event-fx
  ::get-recent
  (fn [{:keys [db]} _]
@@ -95,7 +93,7 @@
  (fn [db [_ result]]
    (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
    #_(re-frame/dispatch [::reset-content-scroll-pos])
-   #_(re-frame/dispatch [::set-display-all-authors-flag true])
+   (re-frame/dispatch [::set-display-all-authors-flag true])
    (->
     db
     (assoc :author-display-states (set-author-display-states result))
@@ -119,7 +117,7 @@
 (re-frame/reg-event-db
  ::toggle-author-display-state
  (fn [db [_ author state]]
-   (assoc-in db [:author-display-states author] state)))
+   (update-in db [:author-display-states author] not)))
 
 
 (re-frame/reg-event-db

@@ -4,14 +4,29 @@
    [nzfe.events :as events]
    [nzfe.subs :as subs]))
 
+(defn all-or-none-box
+  []
+  (let [is-checked? @(re-frame/subscribe [::subs/display-all-authors?])]
+    [:div.level
+     [:div.control
+      [:label.checkbox
+       [:input {:type :checkbox :checked is-checked? :style {:margin 12}
+                :on-change #(re-frame/dispatch
+                             [::events/set-reset-author-display-states (not is-checked?)])}]
+       "All/None"]]]
+    #_[:div.level [:div.is-divider {:data-content "Authors"}]]))
+
 (defn authbox
   "make author checkbox"
   [author]
-  [:div.level
-   [:div.control
-    [:label.checkbox
-     [:input {:type :checkbox :checked true :style {:margin 12}
-              :on-change #(println "clkd")}] author]]])
+  (let [is-checked? @(re-frame/subscribe [::subs/get-author-display-state author])]
+    [:div.level
+     [:div.control
+      [:label.checkbox
+       [:input {:type :checkbox :checked is-checked? :style {:margin 12}
+                :on-change #(re-frame/dispatch
+                             [::events/toggle-author-display-state author])}]
+       author]]]))
 
 (defn authboxes
   "make sequence of authboxes from author list"
@@ -19,7 +34,9 @@
   (let [authors @(re-frame/subscribe [::subs/get-authors])]
     [:section.columns.is-mobile
      (into
-      [:div.auth-col.column.is-12.mr-4.scrollable]
+      [:div.auth-col.column.is-12.mr-4.scrollable
+       (all-or-none-box)
+       [:div.level  ".............................................."]]
       (mapv authbox authors))]))
 
 (defn set-or-reset-display-author

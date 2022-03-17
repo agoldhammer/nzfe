@@ -57,10 +57,10 @@
  (fn [db]
    (-> db :count)))
 
-(re-frame/reg-sub
- ::cats-loading?
- (fn [db]
-   (:cats-loading? db)))
+#_(re-frame/reg-sub
+   ::cats-loading?
+   (fn [db]
+     (:cats-loading? db)))
 
 (re-frame/reg-sub
  ::categories
@@ -140,41 +140,27 @@
  (fn [db]
    (:author-display-states db)))
 
-#_(re-frame/reg-sub
-   ::get-author-display-state
-   (fn [db [_ author]]
-     (get-in db [:author-display-states author])))
+(re-frame/reg-sub
+ ::get-author-display-state
+ (fn [db [_ author]]
+   (get-in db [:author-display-states author])))
 
 (comment
-
-  @(re-frame/subscribe [::get-time-of-count])
-
-
-
-
-
-
-
-
-
-
-
-
-  (re-frame/reg-sub
-   ::get-display-text
-   (fn [db]
-     (:display db)))
+  #_(re-frame/reg-sub
+     ::get-display-text
+     (fn [db]
+       (:display db)))
 
 ;; this section is for testing
-  (defn fake-status-list
-    [n db]
-    (take n (repeat (:dummy-list db))))
+  #_(defn fake-status-list
+      [n db]
+      (take n (repeat (:dummy-list db))))
 
 
 
-  (re-frame/reg-sub
-   ::get-fake-status-list
-   (fn [db [_ n]]
-     (fake-status-list n db)))
+  #_(re-frame/reg-sub
+     ::get-fake-status-list
+     (fn [db [_ n]]
+       (fake-status-list n db)))
 ;;;;;;;
   )
