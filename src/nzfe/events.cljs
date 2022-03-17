@@ -19,7 +19,7 @@
 (re-frame/reg-event-db
  ::set-active-time-button
  (fn [db [_ activate-id]]
-   (when (= activate-id :tb6) (re-frame/dispatch [:toggle-show-custom-time-panel]))
+   (when (= activate-id :tb6) (re-frame/dispatch [::set-now-displaying :custom-time]))
    (assoc-in db [:time-button-bar :active] activate-id)))
 
 (re-frame/reg-event-db
@@ -164,10 +164,10 @@
                  :on-failure [::ajax-error]}}))
 
 
-(re-frame/reg-event-db
- ::initialize-db
- (fn  [_ _]
-   db/default-db))
+#_(re-frame/reg-event-db
+   ::initialize-db
+   (fn  [_ _]
+     db/default-db))
 
 
 (re-frame/reg-event-db
@@ -215,11 +215,11 @@
    db))
 
 
-(re-frame/reg-event-db
- ::set-active-time-button
- (fn [db [_ activate-id]]
-   (when (= activate-id :tb6) (re-frame/dispatch [:toggle-show-custom-time-panel]))
-   (assoc-in db [:time-button-bar :active] activate-id)))
+#_(re-frame/reg-event-db
+   ::set-active-time-button
+   (fn [db [_ activate-id]]
+     (when (= activate-id :tb6) (re-frame/dispatch [:toggle-show-custom-time-panel]))
+     (assoc-in db [:time-button-bar :active] activate-id)))
 
 
 (re-frame/reg-event-db
@@ -234,10 +234,10 @@
    (assoc-in db [:custom-query :status] status)))
 
 
-(re-frame/reg-event-db
- ::toggle-show-custom-time-panel
- (fn [db]
-   (update db :show-custom-time-panel? not)))
+#_(re-frame/reg-event-db
+   ::toggle-show-custom-time-panel
+   (fn [db]
+     (update db :show-custom-time-panel? not)))
 
 
 (re-frame/reg-event-db

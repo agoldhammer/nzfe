@@ -4,6 +4,7 @@
    [nzfe.artview :as artview]
    [nzfe.authview :as authview]
    [nzfe.catview :as cv]
+   [nzfe.custview :as custv]
    [nzfe.events :as events]
    [nzfe.subs :as subs]
    [nzfe.timedd :as timedd]
@@ -58,6 +59,7 @@
         now-displaying @(re-frame/subscribe [::subs/now-displaying])]
     (condp = now-displaying
       :authors (conj (top-display) (authview/authboxes))
+      :custom-time (conj (top-display) (custv/custom-time-view))
       :classic (if error-msg
                  (conj (top-display) (alertview/alert-view error-msg))
                  (conj (top-display) (classic-cols-display))))))

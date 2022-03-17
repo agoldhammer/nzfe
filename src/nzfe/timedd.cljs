@@ -33,12 +33,6 @@
             :on-click #(re-frame/dispatch [::events/toggle-state :time-dd])}
            [:div.dropdown-trigger
             [:i.fa-solid.fa-clock]
-            [:span.tooltiptext "Time frame selector"]
-            #_[:button.button.has-background-info-light
-               {:aria-haspopup true
-                :aria-controls "dropdown-menu"}
-               [:span.has-background-link-light "Time select"]
-               [:span.icon.is-small
-                [:i.fas.fa-angle-down {:aria-hidden true}]]]]
+            [:span.tooltiptext "Time frame selector"]]
            [:div#dropdown-menu.dropdown-menu {:role "menu"}
             (time-buttons)]])))
