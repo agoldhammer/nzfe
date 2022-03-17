@@ -14,11 +14,15 @@
     [:div.modal.is-active
      [:div.modal-background]
      [:div.modal-card
-      [:header.modal-card-head
-       [:p.modal-card-title "Custom time panel"]
+      [:header.modal-card-head.has-background-primary
+       [:p.modal-card-title "Custom query panel"]
        [:button.delete
         {:on-click #(re-frame/dispatch [::events/set-now-displaying :classic])}]]
-      [:div.modal-card-body
+      [:div.modal-card-body.has-background-light
+       [:div.level
+        [:div.level-item
+         #_[:label.mr-4 "Custom query"]
+         [:textarea.textarea.is-medium {:placeholder "Custom query text"}]]]
        [:div.level
         [:div.level-item
          [:div.control
@@ -28,7 +32,7 @@
          [:div.control
           [:label.mr-4 "End Date"]
           end-el]]]]
-      [:footer.modal-card-foot
+      [:footer.modal-card-foot.has-background-primary
        [:button.button
         {:on-click #(re-frame/dispatch [::events/set-now-displaying :classic])}
         "Close"]]]]))

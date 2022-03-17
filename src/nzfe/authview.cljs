@@ -32,7 +32,7 @@
   "make sequence of authboxes from author list"
   []
   (let [authors @(re-frame/subscribe [::subs/get-authors])]
-    [:section.columns.is-mobile
+    [:section#authview.columns.is-mobile
      (into
       [:div.auth-col.column.is-12.mr-4.scrollable
        (all-or-none-box)

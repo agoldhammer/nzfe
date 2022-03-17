@@ -86,3 +86,8 @@
 .topic-content:hover {
   background-color: aquamarine;
 }
+
+#authview {
+  background-color: brown;
+  color: white;
+}
