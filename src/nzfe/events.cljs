@@ -116,7 +116,7 @@
 
 (re-frame/reg-event-db
  ::toggle-author-display-state
- (fn [db [_ author state]]
+ (fn [db [_ author]]
    (update-in db [:author-display-states author] not)))
 
 

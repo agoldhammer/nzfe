@@ -67,10 +67,10 @@
  (fn [db]
    (keys (get-in db [:navdata :cats]))))
 
-(re-frame/reg-sub
- ::category
- (fn [db [_ category]]
-   (get-in db [:navdata :cats category])))
+#_(re-frame/reg-sub
+   ::category
+   (fn [db [_ category]]
+     (get-in db [:navdata :cats category])))
 
 (re-frame/reg-sub
  ::topics-by-category
@@ -82,16 +82,16 @@
  (fn [db [_ category]]
    (mapv #((juxt :topic :desc) %1) (get-in db [:navdata :cats category]))))
 
-(re-frame/reg-sub
- ::fulltopic
- (fn [db [_ category topic]]
-   (let [topics (get-in db [:navdata :cats category])]
-     (first (filter #(= topic (:topic %1)) topics)))))
+#_(re-frame/reg-sub
+   ::fulltopic
+   (fn [db [_ category topic]]
+     (let [topics (get-in db [:navdata :cats category])]
+       (first (filter #(= topic (:topic %1)) topics)))))
 
-(re-frame/reg-sub
- ::topic-to-query
- (fn [_ [_ category topic]]
-   (:query @(re-frame/subscribe [:fulltopic category topic]))))
+#_(re-frame/reg-sub
+   ::topic-to-query
+   (fn [_ [_ category topic]]
+     (:query @(re-frame/subscribe [:fulltopic category topic]))))
 
 (re-frame/reg-sub
  ::get-active-authors
@@ -99,10 +99,10 @@
    (into #{}
          (map first (filter second (:author-display-states db))))))
 
-(re-frame/reg-sub
- ::get-recent
- (fn [db]
-   (:recent db)))
+#_(re-frame/reg-sub
+   ::get-recent
+   (fn [db]
+     (:recent db)))
 
 (defn status-author-active?
   [status active-authors]
