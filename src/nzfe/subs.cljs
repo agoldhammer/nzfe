@@ -33,7 +33,7 @@
  (fn [db [_ button-id]]
    (nth (get-in db [:time-button-bar :ids button-id]) 0)))
 
-
+;; !FIX this when tb6 is active
 (re-frame/reg-sub
  ::query-time
  (fn [db]

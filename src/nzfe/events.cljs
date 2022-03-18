@@ -103,6 +103,23 @@
     (assoc :recent result))))
 
 (re-frame/reg-event-db
+ ::got-statuses
+ (fn [db [_ result]]
+   (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
+   (let [{:keys [error statuses]} result]
+     #_(re-frame/dispatch [::reset-content-scroll-pos])
+     ;; !FIXME proper error reporting
+     (println "error" error)
+     (re-frame/dispatch [::set-display-all-authors-flag true])
+     (->
+      db
+      (assoc :author-display-states (set-author-display-states statuses))
+      (assoc :recent-loading? false)
+      (assoc :recent statuses)))))
+
+
+
+(re-frame/reg-event-db
  ::got-count
  (fn [db [_ result]]
    (->
@@ -170,13 +187,13 @@
  (fn [{:keys [db]} [_ payload]]
    {:db (assoc db :recent-loading? true)
     :http-xhrio {:method :post
-                 :uri "/json/newqry"
+                 :uri "/json/xqry"
                  :timeout 30000
-                 :format (ajax/url-request-format :java)
-                 :body payload
+                 :format (ajax/json-request-format)
+                 :params payload
                  :response-format
                  (ajax/json-response-format {:keywords? true})
-                 :on-success [::got-recent]
+                 :on-success [::got-statuses]
                  :on-failure [::ajax-error]}}))
 
 
@@ -237,7 +254,7 @@
    (let [[start end] @(re-frame/subscribe [::subs/get-start-end])
          text @(re-frame/subscribe [::subs/get-query-text])]
      (re-frame/dispatch [::json-query {:start start :end end
-                                       :text text}]))
+                                       :words (string/split text #" ")}]))
    db))
 
 (re-frame/reg-event-db
@@ -281,6 +298,7 @@
 
 
 (comment
+  (string/split "harris jones" #" ")
   (re-frame/dispatch [::ajax-error {:status-text "screwup"}])
   (re-frame/dispatch [::get-count])
   (re-frame/dispatch [::get-cats])
