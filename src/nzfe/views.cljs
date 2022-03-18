@@ -7,6 +7,7 @@
    [nzfe.custview :as custv]
    [nzfe.events :as events]
    [nzfe.subs :as subs]
+   [nzfe.timeutils :as tu]
    [nzfe.timedd :as timedd]
    [re-frame.core :as re-frame]))
 
@@ -24,10 +25,12 @@
 (defn art-count-display
   []
   (let [count @(re-frame/subscribe [::subs/item-count])
-        time-of-count @(re-frame/subscribe [::subs/get-time-of-count])]
+        time-of-count @(re-frame/subscribe [::subs/get-time-of-count])
+        [d-of-c t-of-c] (tu/dtstring->d+t-string time-of-count)]
     [:div.level-item
      {:on-click #(re-frame/dispatch [::events/get-count])}
-     [:span.has-text-primary-light.tooltip.time-count (str count " items at " time-of-count)
+     [:span.has-text-primary-light.tooltip.time-count (str count " items on " d-of-c
+                                                           " at " t-of-c)
       [:span.tooltiptext "click to update count"]]]))
 
 (defn hero-display

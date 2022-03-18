@@ -1,4 +1,6 @@
-(ns nzfe.db)
+(ns nzfe.db
+  (:require
+   [nzfe.timeutils :as tu]))
 
 (def default-db
   {:name "re-frame"
@@ -12,8 +14,8 @@
                 :text "This is dummy text for testing. Making it longer, just for fun. Today the president announced nothing. http://prospect.org"}
    :custom-query {:text ""
                   :status :success}
-   #_#_:custom-date {:start (now)
-                     :end   (now)}
+   :start (tu/before-as-string 6)
+   :end   (tu/now-as-string)
    :time-button-bar {:active :tb0
                      :ids {:tb0 ["3 hrs" "-H 3"]
                            :tb1 ["6 hrs" "-H 6"]
