@@ -241,9 +241,9 @@
 
 
 (re-frame/reg-event-db
- ::set-custom-date
+ ::set-date
  (fn [db [_ start-or-end date]]
-   (assoc-in db [:custom-date start-or-end] date)))
+   (assoc db start-or-end date)))
 
 
 #_(re-frame/reg-event-db
@@ -260,6 +260,7 @@
   (re-frame/dispatch [::get-count])
   (re-frame/dispatch [::get-cats])
   (re-frame/dispatch [::get-recent])
+  (re-frame/dispatch [::set-date :start "2022-03-01"])
   #_(t/format (t/formatter "yyyy-MM-dd hh:mm:ssZ") (t/now))
   (str (t/instant))
   (t/now)

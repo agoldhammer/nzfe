@@ -3,18 +3,18 @@
    [clojure.string :as string]
    [tick.core :as t]))
 
-(defn yesterday-as-stringdate
-  []
-  (-> (t/now)
-      (t/<< (t/new-duration 24 :hours))
-      (t/date)
-      str))
+#_(defn yesterday-as-stringdate
+    []
+    (-> (t/now)
+        (t/<< (t/new-duration 24 :hours))
+        (t/date)
+        str))
 
-(defn today-as-stringdate
-  []
-  (-> (t/now)
-      t/date
-      str))
+#_(defn today-as-stringdate
+    []
+    (-> (t/now)
+        t/date
+        str))
 
 (defn now-as-string
   []
@@ -32,6 +32,12 @@
   [dtstring]
   (string/split dtstring #"T"))
 
+(defn datestring
+  "will return date only whether datetime or date"
+  [datetime-or-string]
+  (str (t/date datetime-or-string)))
+
 (comment
+  (datestring "2022-03-01")
   (before-as-string 3)
   (dtstring->d+t-string (t/now)))

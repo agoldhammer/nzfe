@@ -3,7 +3,7 @@
    [nzfe.timeutils :as tu]))
 
 (def default-db
-  {:name "re-frame"
+  {:name "nzfe"
    :now-displaying :classic ;; can also be :custom-time :authors
    :default-set true
    :show-custom-time-panel? false
@@ -16,7 +16,7 @@
                   :status :success}
    :start (tu/before-as-string 6)
    :end   (tu/now-as-string)
-   :time-button-bar {:active :tb0
+   :time-button-bar {:active :tb1
                      :ids {:tb0 ["3 hrs" "-H 3"]
                            :tb1 ["6 hrs" "-H 6"]
                            :tb2 ["12 hrs" "-H 12"]

@@ -43,6 +43,11 @@
        (nth (get-in db [:time-button-bar :ids active-time-button]) 1)))))
 
 (re-frame/reg-sub
+ ::get-start-end
+ (fn [db]
+   [(:start db) (:end db)]))
+
+(re-frame/reg-sub
  ::time-dd-active?
  (fn [db]
    (-> db :time-dd :active?)))
@@ -146,6 +151,7 @@
    (get-in db [:author-display-states author])))
 
 (comment
+  @(re-frame/subscribe [::get-start-end])
   #_(re-frame/reg-sub
      ::get-display-text
      (fn [db]

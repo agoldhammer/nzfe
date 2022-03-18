@@ -3,17 +3,26 @@
    [re-frame.core :as re-frame]
    [nzfe.timeutils :as tu]
    [nzfe.events :as events]
+   [nzfe.subs :as subs]
    #_["bulma-calendar/dist/js/bulma-calendar.min.js" :as bulmaCalendar]))
+
+(defn set-date
+  "set start or end date in app-db"
+  [start-or-end datestring]
+  (if (= start-or-end :start)
+    (re-frame/dispatch [::events/set-date :start datestring])
+    (re-frame/dispatch [::events/set-date :end datestring])))
 
 
 (defn custom-time-view
   []
-  (let [start-el [:input#startcal {:type :date
-                                   :defaultValue (tu/yesterday-as-stringdate)
-                                   :on-select #(println (.. % -target -value))}]
+  (let [[start end] @(re-frame/subscribe [::subs/get-start-end])
+        start-el [:input#startcal {:type :date
+                                   :defaultValue (tu/datestring start)
+                                   :on-select #(set-date :start (.. % -target -value))}]
         end-el [:input#endcal {:type :date
-                               :defaultValue (tu/today-as-stringdate)
-                               :on-select #(println (.. % -target -value))}]]
+                               :defaultValue (tu/datestring end)
+                               :on-select #(set-date :end (.. % -target -value))}]]
     [:div.modal.is-active
      [:div.modal-background]
      [:div.modal-card
