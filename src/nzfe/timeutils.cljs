@@ -34,10 +34,13 @@
 
 (defn datestring
   "will return date only whether datetime or date"
-  [datetime-or-string]
-  (str (t/date datetime-or-string)))
+  [date-or-time-string]
+  (if (string/includes? date-or-time-string "T")
+    (str (t/date (t/instant date-or-time-string)))
+    (str (t/date date-or-time-string))))
 
 (comment
   (datestring "2022-03-01")
+  (datestring "2022-03-01T11:28:00Z")
   (before-as-string 3)
   (dtstring->d+t-string (t/now)))

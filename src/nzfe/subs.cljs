@@ -38,14 +38,17 @@
  ::query-time
  (fn [db]
    (let [active-time-button @(re-frame/subscribe [::time-button-active-id])]
-     (if (= :tb6 active-time-button)
-       @(re-frame/subscribe [::get-formatted-custom-date])
-       (nth (get-in db [:time-button-bar :ids active-time-button]) 1)))))
+     (nth (get-in db [:time-button-bar :ids active-time-button]) 1))))
 
 (re-frame/reg-sub
  ::get-start-end
  (fn [db]
    [(:start db) (:end db)]))
+
+(re-frame/reg-sub
+ ::get-query-text
+ (fn [db]
+   (:query-text db)))
 
 (re-frame/reg-sub
  ::time-dd-active?

@@ -3,10 +3,14 @@
    [re-frame.core :as re-frame]
    [nzfe.events :as events]))
 
+(defn close-alert
+  []
+  (re-frame/dispatch [::events/alert nil]))
+
 (defn alert-view
   [msg]
   ;; close alert after 5 secs
-  (js/setTimeout #(re-frame/dispatch [::events/alert nil]) 5000)
+  (js/setTimeout close-alert 5000)
   [:div.modal.is-active
    [:div.modal-background]
    [:div.modal-card
@@ -17,5 +21,5 @@
      [:p (str msg)]]
     [:footer.modal-card-foot
      [:button.button
-      {:on-click #(re-frame/dispatch [::events/alert nil])}
+      {:on-click close-alert}
       "Close"]]]])

@@ -16,6 +16,7 @@
                   :status :success}
    :start (tu/before-as-string 6)
    :end   (tu/now-as-string)
+   :query-text ""
    :time-button-bar {:active :tb1
                      :ids {:tb0 ["3 hrs" "-H 3"]
                            :tb1 ["6 hrs" "-H 6"]

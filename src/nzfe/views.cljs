@@ -65,6 +65,7 @@
       :custom-time (conj (top-display) (custv/custom-time-view))
       :classic (if error-msg
                  (conj (top-display) (alertview/alert-view error-msg))
-                 (conj (top-display) (classic-cols-display))))))
+                 (conj (top-display) (classic-cols-display)))
+      (println "main-panel: shouldn't happen"))))
 
 

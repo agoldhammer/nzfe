@@ -63,6 +63,8 @@
 (re-frame/reg-event-db
  ::alert
  (fn [db [_ msg]]
+   (when (nil? msg)
+     (re-frame/dispatch [::get-recent]))
    (assoc db :alert msg)))
 
 ;; auxiliary function to set up author-display-state section of db
@@ -163,6 +165,20 @@
                  :on-success [::got-recent]
                  :on-failure [::ajax-error]}}))
 
+(re-frame/reg-event-fx
+ ::json-query
+ (fn [{:keys [db]} [_ payload]]
+   {:db (assoc db :recent-loading? true)
+    :http-xhrio {:method :post
+                 :uri "/json/newqry"
+                 :timeout 30000
+                 :format (ajax/url-request-format :java)
+                 :body payload
+                 :response-format
+                 (ajax/json-response-format {:keywords? true})
+                 :on-success [::got-recent]
+                 :on-failure [::ajax-error]}}))
+
 
 #_(re-frame/reg-event-db
    ::initialize-db
@@ -206,13 +222,28 @@
    db))
 
 
-;; must quote query text to accommodate multiple search terms
+;; ?OLD VERSION
+#_(re-frame/reg-event-db
+   ::custom-query-req
+   (fn [db [_ text]]
+     (let [time-part @(re-frame/subscribe [::subs/query-time])]
+       (re-frame/dispatch [::get-query (string/join " " [time-part text])]))
+     db))
+
+;; ?NEW VERSION
 (re-frame/reg-event-db
- ::custom-query-req
- (fn [db [_ text]]
-   (let [time-part @(re-frame/subscribe [::subs/query-time])]
-     (re-frame/dispatch [::get-query (string/join " " [time-part text])]))
+ ::submit-query
+ (fn [db [_]]
+   (let [[start end] @(re-frame/subscribe [::subs/get-start-end])
+         text @(re-frame/subscribe [::subs/get-query-text])]
+     (re-frame/dispatch [::json-query {:start start :end end
+                                       :text text}]))
    db))
+
+(re-frame/reg-event-db
+ ::set-query-text
+ (fn [db [_ text]]
+   (assoc db :query-text text)))
 
 
 #_(re-frame/reg-event-db
@@ -222,16 +253,10 @@
      (assoc-in db [:time-button-bar :active] activate-id)))
 
 
-(re-frame/reg-event-db
- ::set-custom-query
- (fn [db [_ text]]
-   (assoc-in db [:custom-query :text] text)))
-
-
-(re-frame/reg-event-db
- ::set-custom-query-status
- (fn [db [_ status]]
-   (assoc-in db [:custom-query :status] status)))
+#_(re-frame/reg-event-db
+   ::set-custom-query-status
+   (fn [db [_ status]]
+     (assoc-in db [:custom-query :status] status)))
 
 
 #_(re-frame/reg-event-db
