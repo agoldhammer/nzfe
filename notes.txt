@@ -4,8 +4,8 @@ Created with:
     -init page
     - set time
     - alerting mechanism
-    custom query
-    author filtering
+    - custom query
+    - author filtering
     display switching
     - throbber
     rejigger queries

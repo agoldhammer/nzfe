@@ -15,7 +15,7 @@
 (defn topic-button
   [[topic desc]]
   [:div.content.topic-content {:id topic
-                               :on-click #(re-frame/dispatch [::events/topic-req topic])}
+                               :on-click #(re-frame/dispatch [::events/topic-req-new topic])}
    desc])
 
 (defn category-card
@@ -24,9 +24,9 @@
     [:div.card
      [:header.card-header.has-background-info.is-small
       [:p.card-header-title.has-text-primary-light.cat-content
-       {:on-click #(re-frame/dispatch [::events/category-req  category])}
+       {:on-click #(re-frame/dispatch [::events/category-req-new  category])}
        (name category)]]
-     (into [:div.card-content.has-background-light]
+     (into [:div.card-content.topic-ctr]
            (mapv #(topic-button %1) topic-descs))]))
 
 (defn category-cards []

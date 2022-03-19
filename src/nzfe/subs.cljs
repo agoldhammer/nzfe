@@ -29,6 +29,14 @@
    (get-in db [:time-button-bar :active])))
 
 (re-frame/reg-sub
+ ::get-duration
+ (fn [db]
+   (let [active-id (get-in db [:time-button-bar :active])
+         id->hrs {:tb0 3 :tb1 6 :tb2 12 :tb3 24 :tb4 48 :tb5 72
+                  :tb6 :custom}]
+     (get id->hrs active-id))))
+
+(re-frame/reg-sub
  ::button-id-to-text
  (fn [db [_ button-id]]
    (nth (get-in db [:time-button-bar :ids button-id]) 0)))
@@ -155,6 +163,7 @@
 
 (comment
   @(re-frame/subscribe [::get-start-end])
+  ;; !redo  this to display current query
   #_(re-frame/reg-sub
      ::get-display-text
      (fn [db]

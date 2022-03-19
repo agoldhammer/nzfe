@@ -79,9 +79,18 @@
 .topic-content {
   overflow: hidden;
   text-overflow: ellipsis;
+  background-color: bisque;
   /* border-radius: 5px;
   margin-left: 1px;
   padding-left: 2px; */
+}
+
+.topic-ctr {
+  background-color: blanchedalmond;
+}
+
+.art-content {
+  background-color: blanchedalmond;
 }
 
 #latest:hover,
@@ -94,3 +103,11 @@
   background-color: brown;
   color: white;
 }
+
+.hero-body {
+  background-color: rgb(63, 135, 184);
+}
+
+/* .card-content {
+  background-color: bisque;
+} */

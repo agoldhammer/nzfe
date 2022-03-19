@@ -37,11 +37,13 @@
   []
   [:section.hero.has-background-info.is-small
    [:div.hero-body
-    [:div.level
-     [:div.level-item [:p.is-small.has-text-primary-light "Nooze Aggregator"]]
-     [:div.level-item (timedd/time-dropdown)]
-     [:div.level-item #_[:span.is-small.has-text-primary-light.tooltip "sources"
-                         [:span.tooltiptext "filter sources"]]
+    [:div.level-left
+     [:div.level-item
+      [:i.fa-solid.fa-bars.pr-4]]
+     [:div.level-item [:div.subtitle.is-small.has-text-primary-light.pr-4 "Nooze Aggregator"]]
+     [:div.level-item.pr-4 (timedd/time-dropdown)]
+     [:div.level-item.pr-4 #_[:span.is-small.has-text-primary-light.tooltip "sources"
+                              [:span.tooltiptext "filter sources"]]
       (authview/author-select-icon)]
      (art-count-display)]]])
 

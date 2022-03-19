@@ -36,7 +36,7 @@
   [:div.card
    [:header.card-header.has-background-info.is-small
     [:p.card-header-title.has-text-primary-light (string/join " " [author created_at source])]]
-   [:div.card-content.has-background-light
+   [:div.card-content.art-content
     [:div.content (urlize text)]]])
 
 (defn article-column

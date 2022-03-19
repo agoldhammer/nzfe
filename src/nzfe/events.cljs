@@ -6,6 +6,7 @@
    [nzfe.subs :as subs]
    [day8.re-frame.http-fx]
    [ajax.core :as ajax]
+   [nzfe.timeutils :as tu]
    [tick.core :as t]
    [tick.locale-en-us]
    [day8.re-frame.tracing :refer-macros [fn-traced]]))
@@ -108,16 +109,17 @@
    (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
    (let [{:keys [error statuses]} result]
      #_(re-frame/dispatch [::reset-content-scroll-pos])
-     ;; !FIXME proper error reporting
-     (println "error" error)
-     (re-frame/dispatch [::set-display-all-authors-flag true])
-     (->
-      db
-      (assoc :author-display-states (set-author-display-states statuses))
-      (assoc :recent-loading? false)
-      (assoc :recent statuses)))))
-
-
+     (if (not= error 0)
+       (do
+         (println "Server error" error)
+         (re-frame/dispatch [::alert "Server error: " error]))
+       (do
+         (re-frame/dispatch [::set-display-all-authors-flag true])
+         (->
+          db
+          (assoc :author-display-states (set-author-display-states statuses))
+          (assoc :recent-loading? false)
+          (assoc :recent statuses)))))))
 
 (re-frame/reg-event-db
  ::got-count
@@ -218,25 +220,60 @@
    (assoc db :display display)))
 
 
+#_(re-frame/reg-event-db
+   ::topic-req
+   (fn [db [_ topic]]
+     (let [time-part @(re-frame/subscribe [::subs/query-time])
+           query (str time-part " *" topic)]
+       (re-frame/dispatch [::set-display query])
+       (re-frame/dispatch [::get-query query]))
+     db))
+
 (re-frame/reg-event-db
- ::topic-req
+ ::set-start-end
+ (fn [db]
+   (let [selected-duration @(re-frame/subscribe [::subs/get-duration])
+         end (tu/now-as-string)
+         start (tu/before-as-string selected-duration)]
+     (-> db
+         (assoc :start start)
+         (assoc :end end)))))
+
+(re-frame/reg-event-db
+ ::topic-req-new
  (fn [db [_ topic]]
-   (let [time-part @(re-frame/subscribe [::subs/query-time])
-         query (str time-part " *" topic)]
-     (re-frame/dispatch [::set-display query])
-     (re-frame/dispatch [::get-query query]))
+   (let [query (str "*" topic)]
+     (re-frame/dispatch [::set-now-displaying :classic])
+     (re-frame/dispatch [::set-start-end])
+     (re-frame/dispatch [::set-query-text query])
+     (re-frame/dispatch [::submit-query]))
    db))
 
+(comment
+  @(re-frame/subscribe [::subs/topics-by-category :Culture])
+  (re-frame/dispatch [::topic-req-new "Business"]))
 
 (re-frame/reg-event-db
- ::category-req
+ ::category-req-new
  (fn [db [_ category]]
-   (let [time-part @(re-frame/subscribe [::subs/query-time])
-         topics    @(re-frame/subscribe [::subs/topics-by-category category])
-         text-part (string/join (map #(str " *" %1) topics))]
-     (re-frame/dispatch [::set-display (string/join " " [time-part text-part])])
-     (re-frame/dispatch [::get-query (string/join " " [time-part text-part])]))
+   (let [topics @(re-frame/subscribe [::subs/topics-by-category (keyword category)])
+         query (string/join (map #(str " *" %1) topics))]
+     (re-frame/dispatch [::set-now-displaying :classic])
+     (re-frame/dispatch [::set-start-end])
+     (re-frame/dispatch [::set-query-text query])
+     (re-frame/dispatch [::submit-query]))
    db))
+
+
+#_(re-frame/reg-event-db
+   ::category-req
+   (fn [db [_ category]]
+     (let [time-part @(re-frame/subscribe [::subs/query-time])
+           topics    @(re-frame/subscribe [::subs/topics-by-category category])
+           text-part (string/join (map #(str " *" %1) topics))]
+       (re-frame/dispatch [::set-display (string/join " " [time-part text-part])])
+       (re-frame/dispatch [::get-query (string/join " " [time-part text-part])]))
+     db))
 
 
 ;; ?OLD VERSION
