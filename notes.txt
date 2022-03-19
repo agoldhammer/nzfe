@@ -8,5 +8,6 @@ Created with:
     - author filtering
     display switching
     - throbber
-    rejigger queries
+    - rejigger queries
     hamburger menu
+    - fix sort order ascending/descending

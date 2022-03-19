@@ -41,12 +41,12 @@
  (fn [db [_ button-id]]
    (nth (get-in db [:time-button-bar :ids button-id]) 0)))
 
-;; !FIX this when tb6 is active
-(re-frame/reg-sub
- ::query-time
- (fn [db]
-   (let [active-time-button @(re-frame/subscribe [::time-button-active-id])]
-     (nth (get-in db [:time-button-bar :ids active-time-button]) 1))))
+;; !FIX this when tb6 is active--probably no longer needed
+#_(re-frame/reg-sub
+   ::query-time
+   (fn [db]
+     (let [active-time-button @(re-frame/subscribe [::time-button-active-id])]
+       (nth (get-in db [:time-button-bar :ids active-time-button]) 1))))
 
 (re-frame/reg-sub
  ::get-start-end

@@ -170,19 +170,19 @@
                  :on-failure [::ajax-error]}}))
 
 
-(re-frame/reg-event-fx
- ::get-query
- (fn [{:keys [db]} [_ query]]
-   {:db (assoc db :recent-loading? true)
-    :http-xhrio {:method :get
-                 :uri "/json/qry"
-                 :timeout 30000
-                 :format (ajax/url-request-format :java)
-                 :params {:data query}
-                 :response-format
-                 (ajax/json-response-format {:keywords? true})
-                 :on-success [::got-recent]
-                 :on-failure [::ajax-error]}}))
+#_(re-frame/reg-event-fx
+   ::get-query
+   (fn [{:keys [db]} [_ query]]
+     {:db (assoc db :recent-loading? true)
+      :http-xhrio {:method :get
+                   :uri "/json/qry"
+                   :timeout 30000
+                   :format (ajax/url-request-format :java)
+                   :params {:data query}
+                   :response-format
+                   (ajax/json-response-format {:keywords? true})
+                   :on-success [::got-recent]
+                   :on-failure [::ajax-error]}}))
 
 (re-frame/reg-event-fx
  ::json-query
@@ -214,10 +214,10 @@
    db))
 
 
-(re-frame/reg-event-db
- ::set-display
- (fn [db [_ display]]
-   (assoc db :display display)))
+#_(re-frame/reg-event-db
+   ::set-display
+   (fn [db [_ display]]
+     (assoc db :display display)))
 
 
 #_(re-frame/reg-event-db
@@ -232,12 +232,14 @@
 (re-frame/reg-event-db
  ::set-start-end
  (fn [db]
-   (let [selected-duration @(re-frame/subscribe [::subs/get-duration])
-         end (tu/now-as-string)
-         start (tu/before-as-string selected-duration)]
-     (-> db
-         (assoc :start start)
-         (assoc :end end)))))
+   (let [selected-duration @(re-frame/subscribe [::subs/get-duration])]
+     (if (= selected-duration :custom) ;; start/end selected by custom menu
+       db
+       (let [end (tu/now-as-string)
+             start (tu/before-as-string selected-duration)]
+         (-> db
+             (assoc :start start)
+             (assoc :end end)))))))
 
 (re-frame/reg-event-db
  ::topic-req-new
