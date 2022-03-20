@@ -106,6 +106,7 @@
 (re-frame/reg-event-db
  ::got-statuses
  (fn [db [_ result]]
+   (re-frame/dispatch [::get-count])
    (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
    (let [{:keys [error statuses]} result]
      #_(re-frame/dispatch [::reset-content-scroll-pos])

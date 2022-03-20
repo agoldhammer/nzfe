@@ -5,20 +5,24 @@
 }
 
 .hero {
-  max-height: 15vh;
+  max-height: 25vh;
 }
 
-.tabs {
+/* .tabs {
   max-height: 5vh;
-}
+} */
 
 .time-count {
   font-size: small;
 }
 
+.dropdown-content {
+  background-color: bisque;
+}
+
 .columns {
-  position: relative;
-  max-height: 80vh;
+  /* position: relative; */
+  max-height: 75vh;
   overflow: hidden;
   margin-right: 3px;
 }
@@ -108,6 +112,6 @@
   background-color: rgb(63, 135, 184);
 }
 
-/* .card-content {
-  background-color: bisque;
-} */
+#cnt {
+  font-size: x-small;
+}

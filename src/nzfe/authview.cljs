@@ -32,9 +32,9 @@
   "make sequence of authboxes from author list"
   []
   (let [authors @(re-frame/subscribe [::subs/get-authors])]
-    [:section#authview.columns.is-mobile
+    [:section.columns.is-mobile.pt-3
      (into
-      [:div.auth-col.column.is-12.mr-4.scrollable
+      [:div#authview.auth-col.column.is-6.mr-4.scrollable
        (all-or-none-box)
        [:div.level  ".............................................."]]
       (mapv authbox authors))]))
@@ -53,4 +53,4 @@
   [:div.content.tooltip
    {:on-click set-or-reset-display-author}
    [:i.fa-solid.fa-person]
-   [:span.is-small.tooltiptext "Select authors to display"]])
+   [:span.is-small.tooltiptext "Toggle author select"]])
