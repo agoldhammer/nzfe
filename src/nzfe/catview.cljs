@@ -14,8 +14,9 @@
      {:id "recent"
       :on-click #(re-frame/dispatch [::events/get-recent])}
      [:header.card-header.has-background-danger.is-small
-      [:p#latest.card-header-title.has-text-primary-light "Latest!"
-       [:span#cnt.pl-6 (str "[" count " items on " d-of-c " at " t-of-c "]")]]]]))
+      [:p#latest.card-header-title.has-text-primary-light "Latest!"]]
+     [:div.card-content
+      [:span#cnt.pl-6 (str "[" count " items on " d-of-c " at " t-of-c "]")]]]))
 
 (defn topic-button
   [[topic desc]]
