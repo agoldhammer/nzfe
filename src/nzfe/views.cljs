@@ -14,7 +14,7 @@
   []
   (let [query @(re-frame/subscribe [::subs/get-query-text])
         duration @(re-frame/subscribe [::subs/get-duration])]
-    [:nav.navbar.pt-2
+    [:nav.navbar
      [:div.navbar-brand
       [:figure.image.navbar-item.pr-4
        [:img {:src "/images/signature.jpg"}]]
@@ -28,7 +28,7 @@
        [:div.navbar-item.pr-4 (timedd/time-dropdown)]
        [:div.navbar-item.pr-4 (authview/author-select-icon)]
        [:div.stats.box
-        [:p.stats.mb-0.mt-0 (str "query: " query)]
+        [:p.stats.mb-1.mt-0 (str "query: " query)]
         [:p.stats (str "duration: " duration)]]]
 
       [:div.navbar-end]]]))
