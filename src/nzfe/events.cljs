@@ -87,7 +87,8 @@
  (fn [{:keys [db]} _]
    {:db (-> db
             (assoc :recent-loading? true)
-            (assoc :display "Latest!"))
+            (assoc :query-text "Latest!")
+            #_(assoc :display "Latest!"))
     :http-xhrio {:method :get
                  :uri "/json/recent"
                  :timeout 10000

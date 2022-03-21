@@ -12,3 +12,7 @@ Created with:
     - hamburger menu
     - fix sort order ascending/descending
     - display time frame somewhere
+    change name of recent-loading TODO
+    get rid of navdata
+    check for unused events
+    - set duration and query on latest button
