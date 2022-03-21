@@ -2,11 +2,6 @@
   (:require [clojure.string :as string]
             [re-frame.core :as re-frame]))
 
-#_(re-frame/reg-sub
-   ::name
-   (fn [db]
-     (:name db)))
-
 (re-frame/reg-sub
  ::now-displaying
  (fn [db]
@@ -40,13 +35,6 @@
  (fn [db [_ button-id]]
    (nth (get-in db [:time-button-bar :ids button-id]) 0)))
 
-;; !FIX this when tb6 is active--probably no longer needed
-#_(re-frame/reg-sub
-   ::query-time
-   (fn [db]
-     (let [active-time-button @(re-frame/subscribe [::time-button-active-id])]
-       (nth (get-in db [:time-button-bar :ids active-time-button]) 1))))
-
 (re-frame/reg-sub
  ::get-start-end
  (fn [db]
@@ -62,30 +50,15 @@
  (fn [db]
    (-> db :time-dd :active?)))
 
-#_(re-frame/reg-sub
-   ::get-active-tab
-   (fn [db]
-     (-> db (get-in [:tabs :active]))))
-
 (re-frame/reg-sub
  ::item-count
  (fn [db]
    (-> db :count)))
 
-#_(re-frame/reg-sub
-   ::cats-loading?
-   (fn [db]
-     (:cats-loading? db)))
-
 (re-frame/reg-sub
  ::categories
  (fn [db]
    (keys (get-in db [:navdata :cats]))))
-
-#_(re-frame/reg-sub
-   ::category
-   (fn [db [_ category]]
-     (get-in db [:navdata :cats category])))
 
 (re-frame/reg-sub
  ::topics-by-category
@@ -97,27 +70,11 @@
  (fn [db [_ category]]
    (mapv #((juxt :topic :desc) %1) (get-in db [:navdata :cats category]))))
 
-#_(re-frame/reg-sub
-   ::fulltopic
-   (fn [db [_ category topic]]
-     (let [topics (get-in db [:navdata :cats category])]
-       (first (filter #(= topic (:topic %1)) topics)))))
-
-#_(re-frame/reg-sub
-   ::topic-to-query
-   (fn [_ [_ category topic]]
-     (:query @(re-frame/subscribe [:fulltopic category topic]))))
-
 (re-frame/reg-sub
  ::get-active-authors
  (fn [db]
    (into #{}
          (map first (filter second (:author-display-states db))))))
-
-#_(re-frame/reg-sub
-   ::get-recent
-   (fn [db]
-     (:recent db)))
 
 (defn status-author-active?
   [status active-authors]

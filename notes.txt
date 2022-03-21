@@ -18,3 +18,4 @@ Created with:
     - set duration and query on latest button
     reorder categories
     substitute datetime picker
+    add flag to show author filter is on
