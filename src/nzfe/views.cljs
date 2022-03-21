@@ -1,15 +1,13 @@
 (ns nzfe.views
-  (:require
-   [nzfe.alertview :as alertview]
-   [nzfe.artview :as artview]
-   [nzfe.authview :as authview]
-   [nzfe.catview :as cv]
-   [nzfe.custview :as custv]
-   [nzfe.events :as events]
-   [nzfe.subs :as subs]
-   #_[nzfe.timeutils :as tu]
-   [nzfe.timedd :as timedd]
-   [re-frame.core :as re-frame]))
+  (:require [nzfe.alertview :as alertview]
+            [nzfe.artview :as artview]
+            [nzfe.authview :as authview]
+            [nzfe.catview :as cv]
+            [nzfe.custview :as custv]
+            [nzfe.events :as events]
+            [nzfe.subs :as subs]
+            [nzfe.timedd :as timedd]
+            [re-frame.core :as re-frame]))
 
 (defn navx
   "make navbar"
@@ -29,6 +27,31 @@
      [:div.navbar-item.pr-4 (authview/author-select-icon)]]
     [:div.navbar-end]]])
 
+(defn classic-cols-display
+  []
+  [:section.columns.is-mobile.pt-3
+   (cv/category-column)
+   (artview/article-column)])
+
+(defn top-display
+  []
+  [:div.main-view
+   (navx)
+   #_(hero-display)
+   #_(tabber)])
+
+(defn main-panel []
+  (let [error-msg @(re-frame/subscribe [::subs/alert?])
+        now-displaying @(re-frame/subscribe [::subs/now-displaying])]
+    (condp = now-displaying
+      :authors (conj (top-display) (authview/authboxes))
+      :custom-time (conj (top-display) (custv/custom-time-view))
+      :classic (if error-msg
+                 (conj (top-display) (alertview/alert-view error-msg))
+                 (conj (top-display) (classic-cols-display)))
+      (println "main-panel: shouldn't happen"))))
+
+;; outtakes
 #_(defn tabber
     "set up tabbed view"
     []
@@ -64,29 +87,5 @@
        #_[:div.level-item [:div.subtitle.is-small.has-text-primary-light.pr-4 "Nooze Aggregator"]]
        [:div.level-item.pr-4 (timedd/time-dropdown)]
        [:div.level-item.pr-4 (authview/author-select-icon)]]]])
-
-(defn classic-cols-display
-  []
-  [:section.columns.is-mobile.pt-3
-   (cv/category-column)
-   (artview/article-column)])
-
-(defn top-display
-  []
-  [:div.main-view
-   (navx)
-   #_(hero-display)
-   #_(tabber)])
-
-(defn main-panel []
-  (let [error-msg @(re-frame/subscribe [::subs/alert?])
-        now-displaying @(re-frame/subscribe [::subs/now-displaying])]
-    (condp = now-displaying
-      :authors (conj (top-display) (authview/authboxes))
-      :custom-time (conj (top-display) (custv/custom-time-view))
-      :classic (if error-msg
-                 (conj (top-display) (alertview/alert-view error-msg))
-                 (conj (top-display) (classic-cols-display)))
-      (println "main-panel: shouldn't happen"))))
 
 
