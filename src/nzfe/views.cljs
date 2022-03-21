@@ -11,19 +11,23 @@
    [nzfe.timedd :as timedd]
    [re-frame.core :as re-frame]))
 
-#_(defn navx
-    "make navbar"
-    []
-    [:nav.navbar
-     [:button.navbar-burger {:on-click #(re-frame/dispatch [::events/open-navburger])}
-      [:span {:aria-hidden true}]
-      [:span {:aria-hidden true}]
-      [:span {:aria-hidden true}]]
-     [:div#navx.navbar-men
-      [:div.navbar-start
-       [:div.navbar-item "item1"]
-       [:div.navbar-item "item2"]]
-      [:div.navbar-end]]])
+(defn navx
+  "make navbar"
+  []
+  [:nav.navbar
+   [:div.navbar-brand
+    [:figure.image.navbar-item.pr-4
+     [:img {:src "/images/signature.jpg"}]]
+    [:button#navbutton.navbar-burger
+     {:on-click #(re-frame/dispatch [::events/toggle-navmenu])}
+     [:span {:aria-hidden true}]
+     [:span {:aria-hidden true}]
+     [:span {:aria-hidden true}]]]
+   [:div#navmenu.navbar-menu
+    [:div.navbar-start
+     [:div.navbar-item.pr-4 (timedd/time-dropdown)]
+     [:div.navbar-item.pr-4 (authview/author-select-icon)]]
+    [:div.navbar-end]]])
 
 #_(defn tabber
     "set up tabbed view"
@@ -47,25 +51,19 @@
                                                              " at " t-of-c)
         [:span.tooltiptext "click to update count"]]]))
 
-(defn hero-display
-  []
-  [:section.hero.has-background-info.is-small
-   [:div.hero-body
-    [:div.level-left
-     [:div.level-item
-      [:i.fa-solid.fa-bars.pr-4]]
-     [:div.level-item
-      [:figure.image.pr-4
-       [:img {:src "/images/signature.jpg"}]]]
-     #_[:div.level-item [:div.subtitle.is-small.has-text-primary-light.pr-4 "Nooze Aggregator"]]
-     [:div.level-item.pr-4 (timedd/time-dropdown)]
-     [:div.level-item.pr-4 #_[:span.is-small.has-text-primary-light.tooltip "sources"
-                              [:span.tooltiptext "filter sources"]]
-      (authview/author-select-icon)]
-     #_[:div.level-item.pr-4.tooltip
-        [:i.fa-solid.fa-globe]
-        [:span.tooltiptext "Click to display count"]]
-     #_(art-count-display)]]])
+#_(defn hero-display
+    []
+    [:section.hero.has-background-info.is-small
+     [:div.hero-body
+      [:div.level-left
+       [:div.level-item
+        [:i.fa-solid.fa-bars.pr-4]]
+       [:div.level-item
+        [:figure.image.pr-4
+         [:img {:src "/images/signature.jpg"}]]]
+       #_[:div.level-item [:div.subtitle.is-small.has-text-primary-light.pr-4 "Nooze Aggregator"]]
+       [:div.level-item.pr-4 (timedd/time-dropdown)]
+       [:div.level-item.pr-4 (authview/author-select-icon)]]]])
 
 (defn classic-cols-display
   []
@@ -76,8 +74,8 @@
 (defn top-display
   []
   [:div.main-view
-   #_(navx)
-   (hero-display)
+   (navx)
+   #_(hero-display)
    #_(tabber)])
 
 (defn main-panel []

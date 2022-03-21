@@ -22,7 +22,7 @@
 
 .columns {
   /* position: relative; */
-  max-height: 75vh;
+  max-height: 100vh;
   overflow: hidden;
   margin-right: 3px;
 }
@@ -113,5 +113,5 @@
 }
 
 #cnt {
-  font-size: x-small;
+  font-size: smaller;
 }

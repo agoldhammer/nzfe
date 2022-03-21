@@ -29,9 +29,16 @@
    (update-in db [control-id :active?] not)))
 
 (re-frame/reg-event-db
- ::set-active-tab
- (fn [db [_ tab-id]]
-   (assoc-in db [:tabs :active] tab-id)))
+ ::toggle-navmenu
+ (fn [db [_]]
+   (.toggle (.-classList (.getElementById js/document "navbutton")) "is-active")
+   (.toggle (.-classList (.getElementById js/document "navmenu")) "is-active")
+   db))
+
+#_(re-frame/reg-event-db
+   ::set-active-tab
+   (fn [db [_ tab-id]]
+     (assoc-in db [:tabs :active] tab-id)))
 
 (re-frame/reg-event-db
  ::ajax-error
