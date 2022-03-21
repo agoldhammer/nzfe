@@ -43,7 +43,7 @@
  ::ajax-error
  (fn [db [_ details]]
    (re-frame/dispatch [::alert (:status-text details)])
-   (.log js/console details)
+   (.log js/console "ajax-error" details)
    db))
 
 (re-frame/reg-event-db
@@ -113,13 +113,14 @@
  ::got-statuses
  (fn [db [_ result]]
    (re-frame/dispatch [::get-count])
-   (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
+
    (let [{:keys [error statuses]} result]
-     #_(re-frame/dispatch [::reset-content-scroll-pos])
+     (when (empty? statuses) (re-frame/dispatch [::alert "Sorry, no data for this time frame"]))
      (if (not= error 0)
        (do
-         (println "Server error" error)
-         (re-frame/dispatch [::alert "Server error: " error]))
+         (js/console.error "Server error" error)
+         (re-frame/dispatch [::alert "Server error: " error])
+         db)
        (do
          (re-frame/dispatch [::set-display-all-authors-flag true])
          (->
@@ -346,11 +347,11 @@
 (comment
   (string/split "harris jones" #" ")
   (re-frame/dispatch [::ajax-error {:status-text "screwup"}])
+  (re-frame/dispatch [::alert "yo"])
   (re-frame/dispatch [::get-count])
   (re-frame/dispatch [::get-cats])
   (re-frame/dispatch [::get-recent])
   (re-frame/dispatch [::set-date :start "2022-03-01"])
-  #_(t/format (t/formatter "yyyy-MM-dd hh:mm:ssZ") (t/now))
   (str (t/instant))
   (t/now)
   (t/date (t/now))

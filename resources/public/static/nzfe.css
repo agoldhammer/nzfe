@@ -13,6 +13,11 @@
   max-height: 25vh;
 }
 
+.stats {
+  max-height: 80%;
+  font-size: x-small;
+}
+
 /* .tabs {
   max-height: 5vh;
 } */

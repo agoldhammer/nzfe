@@ -12,20 +12,26 @@
 (defn navx
   "make navbar"
   []
-  [:nav.navbar.pt-2
-   [:div.navbar-brand
-    [:figure.image.navbar-item.pr-4
-     [:img {:src "/images/signature.jpg"}]]
-    [:button#navbutton.navbar-burger
-     {:on-click #(re-frame/dispatch [::events/toggle-navmenu])}
-     [:span {:aria-hidden true}]
-     [:span {:aria-hidden true}]
-     [:span {:aria-hidden true}]]]
-   [:div#navmenu.navbar-menu
-    [:div.navbar-start
-     [:div.navbar-item.pr-4 (timedd/time-dropdown)]
-     [:div.navbar-item.pr-4 (authview/author-select-icon)]]
-    [:div.navbar-end]]])
+  (let [query @(re-frame/subscribe [::subs/get-query-text])
+        duration @(re-frame/subscribe [::subs/get-duration])]
+    [:nav.navbar.pt-2
+     [:div.navbar-brand
+      [:figure.image.navbar-item.pr-4
+       [:img {:src "/images/signature.jpg"}]]
+      [:button#navbutton.navbar-burger
+       {:on-click #(re-frame/dispatch [::events/toggle-navmenu])}
+       [:span {:aria-hidden true}]
+       [:span {:aria-hidden true}]
+       [:span {:aria-hidden true}]]]
+     [:div#navmenu.navbar-menu
+      [:div.navbar-start
+       [:div.navbar-item.pr-4 (timedd/time-dropdown)]
+       [:div.navbar-item.pr-4 (authview/author-select-icon)]
+       [:div.stats.box
+        [:p.stats.mb-0.mt-0 (str "query: " query)]
+        [:p.stats (str "duration: " duration)]]]
+
+      [:div.navbar-end]]]))
 
 (defn classic-cols-display
   []

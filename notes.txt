@@ -6,9 +6,9 @@ Created with:
     - alerting mechanism
     - custom query
     - author filtering
-    display switching
+    x display switching
     - throbber
     - rejigger queries
     - hamburger menu
     - fix sort order ascending/descending
-    display time frame somewhere
+    - display time frame somewhere

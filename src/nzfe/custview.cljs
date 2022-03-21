@@ -21,12 +21,14 @@
 (defn custom-time-view
   []
   (let [[start end] @(re-frame/subscribe [::subs/get-start-end])
+        candidate-query @(re-frame/subscribe [::subs/get-query-text])
+        query (if (= candidate-query "") "Custom query terms" candidate-query)
         start-el [:input#startcal {:type :date
                                    :defaultValue (tu/datestring start)
-                                   :on-select #(set-date :start (.. % -target -value))}]
+                                   :on-change #(set-date :start (.. % -target -value))}]
         end-el [:input#endcal {:type :date
                                :defaultValue (tu/datestring end)
-                               :on-select #(set-date :end (.. % -target -value))}]]
+                               :on-change #(set-date :end (.. % -target -value))}]]
     [:div.modal.is-active
      [:div.modal-background]
      [:div.modal-card
@@ -37,7 +39,7 @@
       [:div.modal-card-body.has-background-light
        [:div.level
         [:div.level-item
-         [:textarea.textarea.is-medium {:placeholder "Custom query terms"
+         [:textarea.textarea.is-medium {:placeholder query
                                         :on-change #(re-frame/dispatch
                                                      [::events/set-query-text
                                                       (.. % -target -value)])}]]]
