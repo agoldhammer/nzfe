@@ -1,10 +1,9 @@
 (ns nzfe.core
-  (:require
-   [reagent.dom :as rdom]
-   [re-frame.core :as re-frame]
-   [nzfe.events :as events]
-   [nzfe.views :as views]
-   [nzfe.config :as config]))
+  (:require [nzfe.config :as config]
+            [nzfe.events :as events]
+            [nzfe.views :as views]
+            [re-frame.core :as re-frame]
+            [reagent.dom :as rdom]))
 
 
 (defn dev-setup []

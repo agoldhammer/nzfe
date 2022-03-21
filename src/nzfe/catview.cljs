@@ -1,13 +1,11 @@
 (ns nzfe.catview
-  (:require
-   [goog.i18n.NumberFormat.Format]
-   [re-frame.core :as re-frame]
-   [nzfe.timeutils :as tu]
-   [nzfe.events :as events]
-   [nzfe.subs :as subs])
-  (:import
-   [goog.i18n NumberFormat]
-   [goog.i18n.NumberFormat Format]))
+  (:require [goog.i18n.NumberFormat.Format]
+            [nzfe.events :as events]
+            [nzfe.subs :as subs]
+            [nzfe.timeutils :as tu]
+            [re-frame.core :as re-frame])
+  (:import [goog.i18n NumberFormat]
+           [goog.i18n.NumberFormat Format]))
 
 ;;https://gist.github.com/zentrope/181d591b52dcf3f5d336bc15131a1116
 (def nff

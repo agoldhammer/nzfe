@@ -1,15 +1,14 @@
 (ns nzfe.events
-  (:require
-   [clojure.string :as string]
-   [re-frame.core :as re-frame]
-   [nzfe.db :as db]
-   [nzfe.subs :as subs]
-   [day8.re-frame.http-fx]
-   [ajax.core :as ajax]
-   [nzfe.timeutils :as tu]
-   [tick.core :as t]
-   [tick.locale-en-us]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]))
+  (:require [ajax.core :as ajax]
+            [clojure.string :as string]
+            [day8.re-frame.http-fx]
+            [day8.re-frame.tracing :refer-macros [fn-traced]]
+            [nzfe.db :as db]
+            [nzfe.subs :as subs]
+            [nzfe.timeutils :as tu]
+            [re-frame.core :as re-frame]
+            [tick.core :as t]
+            [tick.locale-en-us]))
 
 (re-frame/reg-event-db
  ::initialize-db
