@@ -16,4 +16,5 @@ Created with:
     get rid of navdata
     check for unused events
     - set duration and query on latest button
-    - reorder categories
+    reorder categories
+    substitute datetime picker
