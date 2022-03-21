@@ -34,7 +34,7 @@
   "from status, create article card"
   [{:keys [source created_at author text]}]
   [:div.card
-   [:header.card-header.has-background-info.is-small
+   [:header.card-header.has-background-info.is-small.art-card-header
     [:p.card-header-title.has-text-primary-light (string/join " " [author created_at source])]]
    [:div.card-content.art-content
     [:div.content (urlize text)]]])
