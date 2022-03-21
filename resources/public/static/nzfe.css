@@ -5,6 +5,7 @@
 }
 
 .navbar {
+  background-color: aliceblue;
   border-bottom-style: groove;
   border-color: blue;
   position: relative;
@@ -12,6 +13,7 @@
 }
 
 .stats {
+  background-color: aliceblue;
   max-height: 75%;
   font-size: x-small;
 }
@@ -29,7 +31,7 @@
 }
 
 .columns {
-  max-height: 90vh;
+  max-height: 88vh;
   overflow: hidden;
   margin-right: 3px;
   padding-bottom: 0px;
@@ -89,6 +91,10 @@
 .cat-content {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#recent-content {
+  background-color: aliceblue;
 }
 
 .topic-content {

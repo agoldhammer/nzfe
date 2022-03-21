@@ -27,7 +27,7 @@
       [:div.navbar-start
        [:div.navbar-item.pr-4 (timedd/time-dropdown)]
        [:div.navbar-item.pr-4 (authview/author-select-icon)]
-       [:div.stats.box
+       [:div.stats.box.mt-2
         [:p.stats.mb-0.mt-0 (str "query: " query)]
         [:p.stats (str "duration: " duration)]]]
 
