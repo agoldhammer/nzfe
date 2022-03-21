@@ -18,9 +18,8 @@
   #_[kitchen-async "0.1.0-SNAPSHOT"]]
 
  :dev-http
- {8280
-  {:root "resources/public"
-   :proxy-url "http://0.0.0.0:5000"}
+ {8280  {:root "resources/public"
+         :proxy-url "http://0.0.0.0:5000"}
   #_#_8290 "target/browser-test"}
 
  :builds
