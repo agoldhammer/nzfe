@@ -132,11 +132,11 @@
 
 /* animate burger menu */
 /* https://github.com/jgthms/bulma/issues/1790 */
-.navbar-menu {
+/* .navbar-menu {
   display: block;
   opacity: 0;
 
-  position: absolute; /* or float: left; width: 100%;*/
+  position: absolute; or float: left; width: 100%;
   left: 0;
   right: 0;
 
@@ -149,4 +149,4 @@
   opacity: 1;
   transform: none;
   pointer-events: auto;
-}
+} */
