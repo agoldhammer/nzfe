@@ -9,5 +9,6 @@ Created with:
     display switching
     - throbber
     - rejigger queries
-    hamburger menu
+    - hamburger menu
     - fix sort order ascending/descending
+    display time frame somewhere

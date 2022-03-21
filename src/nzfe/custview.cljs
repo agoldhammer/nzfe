@@ -1,10 +1,8 @@
 (ns nzfe.custview
-  (:require
-   [re-frame.core :as re-frame]
-   [nzfe.timeutils :as tu]
-   [nzfe.events :as events]
-   [nzfe.subs :as subs]
-   #_["bulma-calendar/dist/js/bulma-calendar.min.js" :as bulmaCalendar]))
+  (:require [nzfe.events :as events]
+            [nzfe.subs :as subs]
+            [nzfe.timeutils :as tu]
+            [re-frame.core :as re-frame]))
 
 (defn set-date
   "set start or end date in app-db"

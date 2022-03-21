@@ -1,8 +1,7 @@
 (ns nzfe.authview
-  (:require
-   [re-frame.core :as re-frame]
-   [nzfe.events :as events]
-   [nzfe.subs :as subs]))
+  (:require [nzfe.events :as events]
+            [nzfe.subs :as subs]
+            [re-frame.core :as re-frame]))
 
 (defn all-or-none-box
   []

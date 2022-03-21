@@ -62,10 +62,10 @@
  (fn [db]
    (-> db :time-dd :active?)))
 
-(re-frame/reg-sub
- ::get-active-tab
- (fn [db]
-   (-> db (get-in [:tabs :active]))))
+#_(re-frame/reg-sub
+   ::get-active-tab
+   (fn [db]
+     (-> db (get-in [:tabs :active]))))
 
 (re-frame/reg-sub
  ::item-count
