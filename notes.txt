@@ -14,7 +14,7 @@ Created with:
     - display time frame somewhere
     change name of recent-loading TODO
     get rid of navdata
-    check for unused events
+    check for unused events/subs
     - set duration and query on latest button
     reorder categories
     substitute datetime picker
