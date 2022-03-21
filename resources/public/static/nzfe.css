@@ -4,11 +4,9 @@
   overflow: hidden;
 }
 
-/* .hero {
-  max-height: 25vh;
-} */
-
 .navbar {
+  border-bottom-style: groove;
+  border-color: blue;
   position: relative;
   max-height: 25vh;
 }
@@ -31,7 +29,7 @@
 }
 
 .columns {
-  max-height: 93vh;
+  max-height: 90vh;
   overflow: hidden;
   margin-right: 3px;
   padding-bottom: 0px;
