@@ -18,10 +18,6 @@
   font-size: x-small;
 }
 
-/* .tabs {
-  max-height: 5vh;
-} */
-
 .art-card-header {
   font-size: x-small;
 }
@@ -35,7 +31,6 @@
 }
 
 .columns {
-  /* position: relative; */
   max-height: 93vh;
   overflow: hidden;
   margin-right: 3px;
@@ -96,17 +91,12 @@
 .cat-content {
   overflow: hidden;
   text-overflow: ellipsis;
-  /* padding-left: 1px;
-  font-size: medium; */
 }
 
 .topic-content {
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: bisque;
-  /* border-radius: 5px;
-  margin-left: 1px;
-  padding-left: 2px; */
 }
 
 .topic-ctr {
