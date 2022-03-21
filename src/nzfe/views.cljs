@@ -14,7 +14,7 @@
 (defn navx
   "make navbar"
   []
-  [:nav.navbar
+  [:nav.navbar.pt-2
    [:div.navbar-brand
     [:figure.image.navbar-item.pr-4
      [:img {:src "/images/signature.jpg"}]]
