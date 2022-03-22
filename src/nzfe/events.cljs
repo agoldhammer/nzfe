@@ -85,8 +85,8 @@
 (re-frame/reg-event-fx
  ::get-recent
  (fn [{:keys [db]} _]
-   #_(re-frame/dispatch [::set-active-time-button :tbo])
-   #_(re-frame/dispatch [::set-start-end])
+   (re-frame/dispatch [::set-active-time-button :tb0])
+   (re-frame/dispatch [::set-start-end])
    {:db (-> db
             (assoc :recent-loading? true)
             (assoc :query-text "Latest!")
