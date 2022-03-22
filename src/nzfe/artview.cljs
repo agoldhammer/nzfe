@@ -1,9 +1,8 @@
 (ns nzfe.artview
-  (:require
-   [goog.string :as gstring]
-   [clojure.string :as string]
-   [re-frame.core :as re-frame]
-   [nzfe.subs :as subs]))
+  (:require [clojure.string :as string]
+            [goog.string :as gstring]
+            [nzfe.subs :as subs]
+            [re-frame.core :as re-frame]))
 
 ;; functions below are used in building articles
 ;; need to turn urls into links and eliminate from text

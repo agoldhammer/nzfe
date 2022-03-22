@@ -1,7 +1,6 @@
 (ns nzfe.alertview
-  (:require
-   [re-frame.core :as re-frame]
-   [nzfe.events :as events]))
+  (:require [nzfe.events :as events]
+            [re-frame.core :as re-frame]))
 
 (defn close-alert
   []
