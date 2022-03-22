@@ -90,7 +90,9 @@
 (re-frame/reg-sub
  ::display-all-authors?
  (fn [db]
-   (:display-all-authors? db)))
+   (every? true? (-> db
+                     :author-display-states
+                     vals))))
 
 (re-frame/reg-sub
  ::get-time-of-count

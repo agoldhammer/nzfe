@@ -19,4 +19,4 @@ Created with:
     reorder categories
     x substitute datetime picker
     add flag to show author filter is on
-    set duration to 3 hours on recent selection
+    - set duration to 3 hours on recent selection

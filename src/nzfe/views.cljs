@@ -13,10 +13,13 @@
   "make navbar"
   []
   (let [query @(re-frame/subscribe [::subs/get-query-text])
-        duration @(re-frame/subscribe [::subs/get-duration])]
+        duration @(re-frame/subscribe [::subs/get-duration])
+        authors-unfiltered? @(re-frame/subscribe [::subs/display-all-authors?])
+        filter-flag-color (if authors-unfiltered? "aliceblue" "red")]
     [:nav.navbar
      [:div.navbar-brand
       [:figure.image.navbar-item.pr-4
+       {:style {:background-color filter-flag-color}}
        [:img {:src "/images/signature.jpg"}]]
       [:button#navbutton.navbar-burger
        {:on-click #(re-frame/dispatch [::events/toggle-navmenu])}
