@@ -13,6 +13,7 @@
   "make navbar"
   []
   (let [query @(re-frame/subscribe [::subs/get-query-text])
+        qry-display (if (= query "") "Latest!" query)
         duration @(re-frame/subscribe [::subs/get-duration])
         authors-unfiltered? @(re-frame/subscribe [::subs/display-all-authors?])
         filter-flag-color (if authors-unfiltered? "aliceblue" "red")]
@@ -31,8 +32,8 @@
        [:div.navbar-item.pr-4 (timedd/time-dropdown)]
        [:div.navbar-item.pr-4 (authview/author-select-icon)]
        [:div.stats.box.mt-2
-        [:p.stats.mb-0.mt-0 (str "query: " query)]
-        [:p.stats (str "duration: " duration)]]]
+        [:p.stats.mb-0.mt-0 (str "query: " qry-display)]
+        [:p.stats (str "duration: " duration " hrs")]]]
 
       [:div.navbar-end]]]))
 
@@ -45,9 +46,7 @@
 (defn top-display
   []
   [:div.main-view
-   (navx)
-   #_(hero-display)
-   #_(tabber)])
+   (navx)])
 
 (defn main-panel []
   (let [error-msg @(re-frame/subscribe [::subs/alert?])

@@ -82,23 +82,33 @@
                            (comp string/upper-case :author) statuses))]
     (zipmap authors (repeat true))))
 
-(re-frame/reg-event-fx
+;; !old version
+#_(re-frame/reg-event-fx
+   ::get-recent
+   (fn [{:keys [db]} _]
+     (re-frame/dispatch [::set-active-time-button :tb0])
+     (re-frame/dispatch [::set-start-end])
+     {:db (-> db
+              (assoc :recent-loading? true)
+              (assoc :query-text "Latest!")
+              #_(assoc :display "Latest!"))
+      :http-xhrio {:method :get
+                   :uri "/json/recent"
+                   :timeout 10000
+                   :format (ajax/url-request-format :java)
+                   :response-format
+                   (ajax/json-response-format {:keywords? true})
+                   :on-success [::got-recent]
+                   :on-failure [::ajax-error]}}))
+
+(re-frame/reg-event-db
  ::get-recent
- (fn [{:keys [db]} _]
-   (re-frame/dispatch [::set-active-time-button :tb0])
+ (fn [db [_ _]]
+   (re-frame/dispatch [::set-now-displaying :classic])
    (re-frame/dispatch [::set-start-end])
-   {:db (-> db
-            (assoc :recent-loading? true)
-            (assoc :query-text "Latest!")
-            #_(assoc :display "Latest!"))
-    :http-xhrio {:method :get
-                 :uri "/json/recent"
-                 :timeout 10000
-                 :format (ajax/url-request-format :java)
-                 :response-format
-                 (ajax/json-response-format {:keywords? true})
-                 :on-success [::got-recent]
-                 :on-failure [::ajax-error]}}))
+   (re-frame/dispatch [::set-query-text ""])
+   (re-frame/dispatch [::submit-query])
+   db))
 
 (re-frame/reg-event-db
  ::got-recent
