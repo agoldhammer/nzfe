@@ -16,7 +16,7 @@ Created with:
     get rid of navdata
     check for unused events/subs
     - set duration and query on latest button
-    reorder categories
+    reorder categories (requires change on server)
     x substitute datetime picker
-    add flag to show author filter is on
+    - add flag to show author filter is on
     - set duration to 3 hours on recent selection
