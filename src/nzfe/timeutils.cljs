@@ -1,20 +1,6 @@
 (ns nzfe.timeutils
-  (:require
-   [clojure.string :as string]
-   [tick.core :as t]))
-
-#_(defn yesterday-as-stringdate
-    []
-    (-> (t/now)
-        (t/<< (t/new-duration 24 :hours))
-        (t/date)
-        str))
-
-#_(defn today-as-stringdate
-    []
-    (-> (t/now)
-        t/date
-        str))
+  (:require [clojure.string :as string]
+            [tick.core :as t]))
 
 (defn now-as-string
   []
