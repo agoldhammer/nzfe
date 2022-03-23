@@ -43,7 +43,7 @@
         {:on-click close-authview}]]
       [:div.modal-card-body
        (into
-        [:div#authsel.auth-col.column.is-6.mr-4.scrollable
+        [:div#authsel.auth-col.column.is-12.scrollable
          (all-or-none-box)
          [:div.level  ".............................................."]]
         (mapv authbox authors))]
