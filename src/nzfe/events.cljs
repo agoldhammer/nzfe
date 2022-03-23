@@ -110,18 +110,18 @@
    (re-frame/dispatch [::submit-query])
    db))
 
-(re-frame/reg-event-db
- ::got-recent
- (fn [db [_ result]]
-   (re-frame/dispatch [::get-count])
-   (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
-   #_(re-frame/dispatch [::reset-content-scroll-pos])
-   (re-frame/dispatch [::set-display-all-authors-flag true])
-   (->
-    db
-    (assoc :author-display-states (set-author-display-states result))
-    (assoc :recent-loading? false)
-    (assoc :recent result))))
+#_(re-frame/reg-event-db
+   ::got-recent
+   (fn [db [_ result]]
+     (re-frame/dispatch [::get-count])
+     (when (empty? result) (re-frame/dispatch [::alert "Server returned nothing"]))
+     #_(re-frame/dispatch [::reset-content-scroll-pos])
+     (re-frame/dispatch [::set-display-all-authors-flag true])
+     (->
+      db
+      (assoc :author-display-states (set-author-display-states result))
+      (assoc :recent-loading? false)
+      (assoc :recent result))))
 
 (re-frame/reg-event-db
  ::got-statuses
