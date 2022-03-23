@@ -30,8 +30,8 @@
 
 (defn topic-button
   [[topic desc]]
-  [:div.content.topic-content {:id topic
-                               :on-click #(re-frame/dispatch [::events/topic-req-new topic])}
+  [:div.topic-content {:id topic
+                       :on-click #(re-frame/dispatch [::events/topic-req-new topic])}
    desc])
 
 (defn category-card

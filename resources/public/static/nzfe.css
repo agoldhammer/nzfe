@@ -33,18 +33,18 @@
 .columns {
   max-height: 88vh;
   overflow: hidden;
-  margin-right: 3px;
+  margin-right: 0px;
   padding-bottom: 0px;
   margin-bottom: 0px;
 }
 
 .scrollable {
   overflow-y: auto;
-  margin-left: 2px;
+  margin-left: 0px;
   margin-bottom: 0px;
   margin-top: 0px;
-  padding-left: 12px;
-  padding-right: 4px;
+  padding-left: 8px;
+  padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
 }
@@ -99,11 +99,16 @@
 
 .topic-content {
   overflow: hidden;
+  font-weight: 500;
+  padding-left: 12px;
+  margin-bottom: 8px;
   text-overflow: ellipsis;
   background-color: bisque;
 }
 
 .topic-ctr {
+  padding: 8px 24px 4px 24px;
+  /* padding-left: 18px; */
   background-color: blanchedalmond;
 }
 
@@ -117,13 +122,9 @@
   background-color: aquamarine;
 }
 
-#authview {
-  background-color: brown;
+#authsel {
+  background-color: rgb(43, 25, 202);
   color: white;
-}
-
-.hero-body {
-  background-color: rgb(63, 135, 184);
 }
 
 #cnt {

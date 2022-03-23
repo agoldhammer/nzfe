@@ -12,8 +12,7 @@
        [:input {:type :checkbox :checked is-checked? :style {:margin 12}
                 :on-change #(re-frame/dispatch
                              [::events/set-reset-author-display-states (not is-checked?)])}]
-       "All/None"]]]
-    #_[:div.level [:div.is-divider {:data-content "Authors"}]]))
+       "All/None"]]]))
 
 (defn authbox
   "make author checkbox"
@@ -27,16 +26,31 @@
                              [::events/toggle-author-display-state author])}]
        author]]]))
 
+(defn close-authview
+  []
+  (re-frame/dispatch [::events/close-authview]))
+
 (defn authboxes
   "make sequence of authboxes from author list"
   []
   (let [authors @(re-frame/subscribe [::subs/get-authors])]
-    [:section.columns.is-mobile.pt-3
-     (into
-      [:div#authview.auth-col.column.is-6.mr-4.scrollable
-       (all-or-none-box)
-       [:div.level  ".............................................."]]
-      (mapv authbox authors))]))
+    [:div#authview.modal.is-active
+     [:div.modal-background]
+     [:div.modal-card
+      [:header.modal-card-head
+       [:p.modal-card-title "Select authors to display"]
+       [:button.delete
+        {:on-click close-authview}]]
+      [:div.modal-card-body
+       (into
+        [:div#authsel.auth-col.column.is-6.mr-4.scrollable
+         (all-or-none-box)
+         [:div.level  ".............................................."]]
+        (mapv authbox authors))]
+      [:footer.modal-card-foot
+       [:button.button
+        {:on-click close-authview}
+        "Close"]]]]))
 
 (defn set-or-reset-display-author
   []

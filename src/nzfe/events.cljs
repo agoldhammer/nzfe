@@ -179,6 +179,12 @@
       (assoc :author-display-states
              (zipmap authors (repeat true-or-false)))))))
 
+(re-frame/reg-event-db
+ ::close-authview
+ (fn [db [_]]
+   (.toggle (.-classList (.getElementById js/document "authview")) "is-active")
+   (assoc db :now-displaying :classic)))
+
 
 (re-frame/reg-event-fx
  ::get-count

@@ -45,7 +45,7 @@
         ;; TODO change name of recent-loading?
         loading? @(re-frame/subscribe [::subs/recent-loading?])
         #_#_test-statuses [test-status]]
-    (into [:div#art-col.column.is-7.mr-4.scrollable]
+    (into [:div#art-col.column.is-7.mr-1.scrollable]
           (if loading?
             [[:img {:src "static/hourglass.gif" :alt "hourglass"}]]
             (mapv make-article-card statuses)))))

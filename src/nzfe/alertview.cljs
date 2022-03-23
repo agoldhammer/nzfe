@@ -15,7 +15,8 @@
    [:div.modal-card
     [:header.modal-card-head
      [:p.modal-card-title "Error!"]
-     [:button.delete]]
+     [:button.delete
+      {:on-click close-alert}]]
     [:div.modal-card-body
      [:p (str msg)]]
     [:footer.modal-card-foot
