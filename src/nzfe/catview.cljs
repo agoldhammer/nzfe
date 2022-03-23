@@ -2,7 +2,6 @@
   (:require [goog.i18n.NumberFormat.Format]
             [nzfe.events :as events]
             [nzfe.subs :as subs]
-            [nzfe.timeutils :as tu]
             [re-frame.core :as re-frame])
   (:import [goog.i18n NumberFormat]
            [goog.i18n.NumberFormat Format]))
@@ -17,9 +16,7 @@
 
 (defn recent-card
   []
-  (let [count @(re-frame/subscribe [::subs/item-count])
-        time-of-count @(re-frame/subscribe [::subs/get-time-of-count])
-        [d-of-c t-of-c] (tu/dtstring->d+t-string time-of-count)]
+  (let [[count [d-of-c t-of-c]] @(re-frame/subscribe [::subs/count-and-time])]
     [:div.card
      {:id "recent"
       :on-click #(re-frame/dispatch [::events/get-recent])}

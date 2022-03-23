@@ -1,5 +1,6 @@
 (ns nzfe.subs
   (:require [clojure.string :as string]
+            [nzfe.timeutils :as tu]
             [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
@@ -54,6 +55,16 @@
  ::item-count
  (fn [db]
    (-> db :count)))
+
+(re-frame/reg-sub
+ ::count-and-time
+ :<- [::item-count]
+ :<- [::get-time-of-count]
+ (fn [[item-count get-time-of-count]]
+   [item-count (tu/dtstring->d+t-string get-time-of-count)]))
+
+(comment
+  @(re-frame/subscribe [::count-and-time]))
 
 (re-frame/reg-sub
  ::categories
