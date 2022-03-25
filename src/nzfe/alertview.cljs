@@ -9,7 +9,7 @@
 (defn alert-view
   [msg]
   ;; close alert after 5 secs
-  (js/setTimeout close-alert 5000)
+  #_(js/setTimeout close-alert 5000)
   [:div.modal.is-active
    [:div.modal-background]
    [:div.modal-card

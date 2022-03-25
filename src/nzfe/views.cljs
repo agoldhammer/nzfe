@@ -21,7 +21,7 @@
      [:div.navbar-brand
       [:figure.image.navbar-item.pr-4
        {:style {:background-color filter-flag-color}}
-       [:img {:src "/images/signature.jpg"}]]
+       [:img {:src "/static/images/signature.jpg"}]]
       [:button#navbutton.navbar-burger
        {:on-click #(re-frame/dispatch [::events/toggle-navmenu])}
        [:span {:aria-hidden true}]
