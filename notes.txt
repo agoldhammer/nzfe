@@ -21,5 +21,5 @@ Created with:
     - add flag to show author filter is on
     - set duration to 3 hours on recent selection
     hourglass doesn't always appear
-    closing menu should fold up the navbar when dropped down
-    stop using /json/count, use xcount instead
+    closing menu should fold up the navbar when dropped down, not working for time dropdown
+    

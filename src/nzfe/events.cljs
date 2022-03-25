@@ -30,7 +30,7 @@
 (re-frame/reg-event-db
  ::toggle-navmenu
  (fn [db [_]]
-   (.toggle (.-classList (.getElementById js/document "navbutton")) "is-active")
+   #_(.toggle (.-classList (.getElementById js/document "navbutton")) "is-active")
    (.toggle (.-classList (.getElementById js/document "navmenu")) "is-active")
    db))
 
@@ -183,6 +183,7 @@
  ::close-authview
  (fn [db [_]]
    (.toggle (.-classList (.getElementById js/document "authview")) "is-active")
+   (re-frame/dispatch [::toggle-navmenu])
    (assoc db :now-displaying :classic)))
 
 
